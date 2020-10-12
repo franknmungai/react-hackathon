@@ -12,8 +12,9 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_mountain.svg',
 		description: (
 			<>
-				Learn React by Building an online multiplayer Chess application with
-				video chat interaction. <br />{' '}
+				In this tutorial, we will be creating a chess game that allows players
+				to play online, and even communicate with each other through video chat.
+				This will make it a truly live game experience.
 				<h4>
 					View the finished application{' '}
 					<a href="https://friendlychat-a2335.firebaseapp.com/" target="_blank">
@@ -24,7 +25,7 @@ const features = [
 		),
 	},
 	{
-		title: 'Made easy to follow',
+		title: 'Easy to follow',
 		imageUrl: 'img/undraw_docusaurus_tree.svg',
 		description: (
 			<>
@@ -40,11 +41,12 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_react.svg',
 		description: (
 			<>
-				By the end of this, you will be familiar with React and hooks such as{' '}
-				<code>useState</code> <code>useEffect</code> <code>useRef</code>{' '}
-				<code>useReducer</code>. How to use <code>socket.io</code> and{' '}
-				<code>WebRCT</code> with <code> peer.js</code> and so much more. Let's
-				get started.
+				By the end of this tutorial, you will be familiar with React basics such
+				as Components, props and state and hooks such as <code>useState</code>{' '}
+				<code>useEffect</code> <code>useRef</code> <code>useReducer</code>.
+				Creating Layouts with <code>CSS Grid</code> How to use{' '}
+				<code>socket.io</code> and <code>WebRTC</code> with{' '}
+				<code> peer.js</code> and so much more. Let's get started.
 			</>
 		),
 	},
