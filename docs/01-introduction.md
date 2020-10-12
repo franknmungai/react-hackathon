@@ -1,5 +1,5 @@
 ---
-id: lesson1
+id: intro
 title: Introduction
 sidebar_label: Introduction
 slug: /introduction
@@ -7,7 +7,9 @@ slug: /introduction
 
 In this tutorial, we will be creating a chess game that allows players to play online, and even communicate with each other through video chat. This will make it a truly live game experience.
 
-This tutorial is perfect for beginner learners with a good understanding of fundamental concepts in JavaScript, functions, variables, conditionals etc. No knowledge on React and Node.js will be required. Theses will be explained along the way.
+This tutorial is perfect for beginner learners with a good understanding of fundamental concepts in JavaScript, functions, variables, conditionals etc.
+Basic HTML and CSS knowledge is also needed to follow along
+No knowledge on React and Node.js will be required. Theses will be explained along the way.
 
 ## Techonologies
 

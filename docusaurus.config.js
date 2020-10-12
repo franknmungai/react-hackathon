@@ -55,10 +55,10 @@ module.exports = {
 						},
 						{
 							label: 'Collins Kesuibai',
-							href: 'https://github.com/franknmungai',
+							href: 'https://github.com/collinskesuibai',
 						},
 						{
-							label: 'Twitter',
+							label: 'Guest',
 							href: 'https://twitter.com/docusaurus',
 						},
 					],
