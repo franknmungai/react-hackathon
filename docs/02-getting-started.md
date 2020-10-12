@@ -36,8 +36,11 @@ Since we are importing `App.css`
 Let's create a new file `App.css` to add some base styling
 
 ```css
-body {
+* {
 	margin: 0;
+	padding: 0;
+}
+body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
 		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
 		'Helvetica Neue', sans-serif;
@@ -67,7 +70,7 @@ We call `ReactDOM.render()` passing our `App` component as the first argument an
 
 Our component is wrapped in `React.StrictMode`, this is optional but gives us useful warnings about any possible issues in our component.
 
-Notice how we use our component as `<App/>`. React components are used like HTML tags, but they must start with an uppercase letter.
+Notice how we use our component as `<App/>`. React components are used like HTML tags, and they must start with an uppercase letter.
 
 Save and check your browser, the App should now look as shown
 
