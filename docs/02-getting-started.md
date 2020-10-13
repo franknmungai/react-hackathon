@@ -12,6 +12,7 @@ npx create-react-app chess-client
 ```
 
 This creates a new app with React and installs the dependencies. Run `cd chess-client` to navigate to that folder and run `npm start` to start the application.
+`npx` and `npm` commands were installed as part of your installation of Node.js
 
 ![img](../static/img/Screenshot1.png)
 
