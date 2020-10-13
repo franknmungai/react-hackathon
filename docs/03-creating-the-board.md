@@ -1,8 +1,8 @@
 ---
-id: lesson3
+id: lesson2
 title: Creating the chess board
 sidebar_label: Creating the chess board
-slug: /02-get-started
+slug: /03-creating-the-chess-board
 ---
 
 ## Working with data
