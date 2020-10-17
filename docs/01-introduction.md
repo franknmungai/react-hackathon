@@ -46,8 +46,8 @@ This is just an overview of most of the features we will be implementing in our 
 
 For creating the game's interface, we will be using [React](https://reactjs.org). It's a JavaScript library used for creating User interfaces. When using React, our output(view or user-interface) is a function of our data. The data could be a string, object, array or any data type. By changing this data in certain ways, React automatically re-renders the parts of our application affected by the change in data. This makes it declarative. This is a fundamental concept that will become more clear as we go on with our project.
 
-To handle chess logic, generating, and validating moves for pieces in our game, checkmate and draw detection, we will be using the library [chess.js](https://github.com/jhlywa/chess.js). It does all the heavy lifting so that we don't need to handle chess related logic directly, letting us focus on our app and user experience.
+To handle chess logic, generating and validating moves for pieces in our game, checkmate and draw detection, we will be using the library [chess.js](https://github.com/jhlywa/chess.js). It does all the heavy lifting so that we don't need to handle chess related logic directly, letting us focus on our app and user experience.
 
 ## Setup
 
-We need to install Node.js to download some of the packages used in this project. We will also require Node to create our app's server. You can download and install Node.js [here](https://nodejs.org)
+We need to install Node.js to download some of the packages used in this project. We will also require Node to create our app's server. You can download and install Node.js from [here](https://nodejs.org)

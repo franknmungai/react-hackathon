@@ -22,7 +22,7 @@ module.exports = {
 					label: 'Learn',
 					position: 'left',
 				},
-				{ to: 'blog', label: 'Blog', position: 'left' },
+				{ to: 'blog/', label: 'Blog', position: 'left' },
 				{
 					href: 'https://github.com/franknmungai',
 					label: 'GitHub',
@@ -58,8 +58,8 @@ module.exports = {
 							href: 'https://github.com/collinskesuibai',
 						},
 						{
-							label: 'Guest',
-							href: 'https://twitter.com/docusaurus',
+							label: 'June Awuor',
+							href: 'https://github.com/AwuorJune',
 						},
 					],
 				},
@@ -73,7 +73,7 @@ module.exports = {
 						},
 						{
 							label: 'GitHub',
-							href: 'https://github.com/franknmungai',
+							href: 'https://github.com/franknmungai/react-hackathon',
 						},
 					],
 				},
@@ -88,14 +88,12 @@ module.exports = {
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
 					// Please change this to your repo.
-					editUrl:
-						'https://github.com/facebook/docusaurus/edit/master/website/',
+					editUrl: 'https://github.com/franknmungai/react-hackathon',
 				},
 				blog: {
 					showReadingTime: true,
 					// Please change this to your repo.
-					editUrl:
-						'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+					editUrl: 'https://github.com/franknmungai/react-hackathon',
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.css'),
