@@ -7,9 +7,11 @@ slug: /03-creating-the-chess-board
 
 ## Working with our data
 
-<!-- Next we will be creating a chess board. It will look something like this -->
+Next we will be creating a chess board.
 
-<!-- ![img](../static/img/Screenshot3.png) -->
+A chessboard consists of 64 equal squares arranged in eight rows and eight columns.
+
+It will look something like this:
 
 In order to get started, let's install [chess.js](https://github.com/jhlywa/chess.js)
 
@@ -181,6 +183,9 @@ return board;
 Finally, we loop through the `cells` and `pieces` arrays. In each iteration we create a new `Cell` object from the each `cell[i]` and `pieces[i]` and add it to the board array.
 Eventually we return `board`
 
-:::note
+Next, we will use this `board` data to create a component that will display the items in our `board` array.
 
-[View entire source code for create-board.js](03-source-code.md)
+You can find the code for this lesson [here](https://github.com/franknmungai/live-chess/tree/02-create-the-chess-board-data)
+
+:::tip
+Copy entire source code for create-board.js from the next section.
