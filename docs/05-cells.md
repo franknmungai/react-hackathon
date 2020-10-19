@@ -2,12 +2,12 @@
 id: lesson4
 title: Creating the cells
 sidebar_label: Creating the cells
-slug: /04-adding-cells
+slug: /05-adding-cells
 ---
 
 ## Creating the `Cell` component
 
-In the previous section, we worked on creating the board component. However it is not fully complete. The board needs distinct cells, this are the small squares that hold the pieces. As mention before, the board has 64 cells arranged in 8 rows and 8 columns. The cells are alternately colored light and dark.
+In the previous section, we worked on creating the board component. However it is not fully complete. The board needs distinct cells, this are the small squares that hold the pieces. As mentioned before, the board has 64 cells arranged in 8 rows and 8 columns. The cells are alternately colored light and dark. (You can read more about how a chess board is setup [here](https://docs.kde.org/trunk5/en/kdegames/knights/board.html), this is optional as we will be going through all this)
 
 ![img](../static/img/board-illustration.png)
 

@@ -2,7 +2,7 @@
 id: lesson2
 title: Creating the chess board data
 sidebar_label: Creating the chess board data
-slug: /03-creating-the-chess-board
+slug: /02-creating-the-chess-board
 ---
 
 ## Working with our data
@@ -23,7 +23,7 @@ npm install chess.js
 
 Create a folder in `src`called `pages`, our App will consist of several pages. Create a new folder `Game` and a new file inside `Game`, name it `index.jsx`. This will be the entry point to the page
 
-<!-- Folder structure -->
+<!-- Todo Folder structure -->
 
 Inside `src/pages/Game/index.jsx` we will be creating a component that will be main game controller. It will render the board and hold our game's data(state)
 
@@ -50,6 +50,25 @@ export default Game;
 
 First, we import the `useState` hook. A Hook is a function that allows us to use features from React's API, they typically start with the _use_ prefix. `useState` helps us create stateful values. These are values that can be updated to re-render our component. `useState` takes an initial value and returns an array of 2 elements which we can [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) out, the first item is the stateful value, and the second is a function we can use to update this value. We will use this in a while
 We can pass an initial value to `useState`, which in this case is the `FEN` variable.
+
+Destructuring is a syntax that allows us to get elements from an array. It can also be applied to an object to get it's properties. Here is a snippet showing how it works
+
+```java
+//* array destructuring
+const fruits = ['orange', 'apples', 'berries' ];
+const [one, two, three] = fruits; //we destructure items based on their respective index
+// one = 'orange'
+// two = 'apples'
+// three = 'berries'
+
+//* object destructuring
+const person = {name: 'Nel', address: 'South 7' };
+const {name, address} = person; //we can destructure properties from an object
+// name = 'Nel'
+// address = 'South 7'
+
+
+```
 
 ## FEN
 
@@ -119,9 +138,15 @@ export const createBoard = () => {
 
 ```
 
+:::tip
+You can ignore the comment before the function. It's known as a [JSDoc](https://jsdoc.app/about-getting-started.html) comment and it helps give annotations about the parameters and return type of a function. It also improves [intellisense](https://code.visualstudio.com/docs/editor/intellisense)/ code auto-completion to the users of the function.
+:::
+
 ```java
 // The rest of the code in this file has been left out to keep this short
 export const createBoard = (fenString) => {
+	// src/functions/create-board.js
+
 	const fen = fenString.split(' ')[0]; //Get the first portion
 
 	const fenPieces = fen.split('/').join(''); //remove the row delimiters '/'
@@ -132,7 +157,8 @@ export const createBoard = (fenString) => {
 Inside `createBoard`, we use `fenString.split(' ')[0].split()` to get the first portion of the string, which is what we need. Next we apply `fen.split('/').join('')` to convert the FEN into one long continuous string `rnbqkbnrpppppppp8888PPPPPPPPRNBQKBNR`
 
 ```js
-// still within createBoard
+// still inside createBoard function
+
 let pieces = Array.from(fenPieces);
 //Save individual pieces for each of the 64 cells
 Array.from(fenPieces).forEach((item, index) => {
@@ -173,14 +199,19 @@ const board = [];
 for (let i = 0; i < cells.length; i++) {
 	//'cells', and 'pieces' have the same length of 64
 	const cell = cells[i];
-	const piece = pieces[i];
+	const piece = pieces[pieces.length - i - 1];
 	board.push(new Cell(cell, piece));
 }
 
 return board;
 ```
 
-Finally, we loop through the `cells` and `pieces` arrays. In each iteration we create a new `Cell` object from the each `cell[i]` and `pieces[i]` and add it to the board array.
+Finally, we loop through the `cells` and `pieces` arrays. In each iteration we create a new `Cell` object from the each cell `cell[i]` and piece ` pieces[pieces.length - i - 1]` and add it to the board array.
+
+Mmmmh, wait... `pieces[pieces.length - i - 1]`? To understand why that is, consider how we generate our cells. We reverse the `rows` and loop from 8 to 1. This helps us generate the cells in the order they would visually appear in the browser i.e `a8 - h8` at the top and `a1-h1` at the bottom of the board. This means that our `cells` array reads from `black` to `white`. While our `pieces` array which we get from the `fen` reads from `white` to `black`. So in order to generate the `board`, with the right pieces we need to index the `pieces` array starting from the right(where black pieces are) hence we use `pieces[pieces.length - i - 1]` and _not_ `pieces[i]`.
+
+Open the browser developer tools using `Ctrl + Shift + i` and try running each of the code snippets provided above to see what they output.
+
 Eventually we return `board`
 
 Next, we will use this `board` data to create a component that will display the items in our `board` array.

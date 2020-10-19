@@ -2,7 +2,7 @@
 id: lesson3
 title: Drawing the Board
 sidebar_label: Drawing the Board
-slug: /03-adding-pieces
+slug: /04-adding-pieces
 ---
 
 Let's use the `createBoard` function we wrote in the previous section to create the Chess board component.

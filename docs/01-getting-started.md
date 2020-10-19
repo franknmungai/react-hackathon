@@ -2,7 +2,7 @@
 id: lesson1
 title: Getting started
 sidebar_label: Getting started
-slug: /02-get-started
+slug: /01-get-started
 ---
 
 To get started, lets create a new React project by running
