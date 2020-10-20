@@ -121,7 +121,7 @@ In this component, we receive an object holding our _props_, from which we can d
 As part of this component's return statement, we have `cells.map((cell) => <div>{cell.pos}</div>`.
 Since since `cells` is an array, we are calling `.map` which is a method that transforms one array to another. It iterates over the `board` array and for each Cell, it creates a _div_ This creates an array of _divs_, we use the `{}` syntax to write expressions in _jsx_, as in `<div>{cell.pos}</div>`, to render the position of the cell as the child content in our `div`. We also wrap the `.map` expression in braces `{}`.
 
-Notice we provide a `key` attribute to the _div_. Whenever we create elements/components dynamically for example using `.map() ` we need to provide a unique key so that React can manage this multiple elements.
+Notice we provide a `key` attribute to the _div_. Whenever we create elements/components dynamically for example using `.map() ` we need to provide a unique key so that React can manage this multiple elements. Find out more on transforming lists to components in React [here](https://reactjs.org/docs/lists-and-keys.html)
 
 Also notice how the top level `div` has a `className` attribute. In React, we pass classes using the `className` attribute instead of `class`. This is because class is a reserved JavaScript keyword.
 

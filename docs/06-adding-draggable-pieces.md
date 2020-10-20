@@ -56,7 +56,7 @@ export default Piece;
 ## Loading images dynamically with `require`
 
 The `Piece` component expects to receive two _properties/props_. A `name` and `pos` prop.
-The `name` _prop_ will hold the name of the piece for example `K` for _king(black)_, recall that white pieces are lowercase and black pieces are uppercase. The `pos` _prop_ will be the name of the cell holding this piece for example `a1`.
+The `name` _prop_ will hold the name of the piece for example `K` for _king(black)_, recall that white pieces are uppercase and black pieces are lowercase. The `pos` _prop_ will be the name of the cell holding this piece for example `a1`.
 
 In the next few lines we try to figure out which piece image to use based on the name and color of this piece. First you will notice that inside our `/src/assets/pieces` folder where we saved this piece images, the images have a consistent name pattern. Each image name comprises of the color(in lowercase) and the type of piece(in uppercase). For example `wP.png` and `bQ.png` for white _pawn_ and black _queen_ respectively.
 (You can read more about various types of chess pieces [here](https://docs.kde.org/trunk5/en/kdegames/knights/piece-movement.html), though it's not required).
@@ -73,7 +73,7 @@ Finally in our return statement, we have a _div_ with an inline style. To use in
 
 ## PropTypes
 
-At the bottom we include PropTypes for this components. PropTypes are used to specify the name and types for the props we expect for this component. We get helpful warnings when we have missing props that are required, or when we provide the wrong types for the props. PropTypes are also a great way of documenting components. We need to import Proptypes from `prop-types` in order to use them.
+At the bottom we include PropTypes for this components. PropTypes are used to specify the name and types for the props we expect for this component. We get helpful warnings when we have missing props that are required, or when we provide the wrong types for the props. [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html) are also a great way of documenting components. We need to import Proptypes from `prop-types` in order to use them.
 
 ```java
 Piece.prototype = {
@@ -152,5 +152,7 @@ We pass the `pos` and `name` props with their values as required
 This is what our app looks like at the moment 😃
 
 ![img](../static/img/Screenshot5.png)
+
+In the next section, we will be using drag and drop events to actually drag the pieces across the board to make moves.
 
 Get the full code for this lesson [here](https://github.com/franknmungai/live-chess/tree/05-adding-draggable-pieces)

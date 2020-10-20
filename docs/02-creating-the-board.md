@@ -75,7 +75,7 @@ const {name, address} = person; //we can destructure properties from an object
 [FEN (Forsyth–Edwards Notation)](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation) is a string notation used to describe a particular board position of a chess game. The FEN value we used above `rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1`, describes the starting position of any chess game.
 
 It has 6 fields seperated by a space. For this tutorial, we will only work with the first field. `rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR` This field tells us the position of all the pieces in the game at the beginning.
-It's okay if you are not familiar with chess, let's break it down: each character in that string represents a piece `r -> rook`, `n -> (k)night`, `b -> bishop`, `q -> Queen`, `k-> King`. The uppercase characters represent black pieces, while the lowercase represent white.
+It's okay if you are not familiar with chess, let's break it down: each character in that string represents a piece `r -> rook`, `n -> (k)night`, `b -> bishop`, `q -> Queen`, `k-> King`. The uppercase characters represent white pieces, while the lowercase represent black.
 You don't need to know how these pieces play in order to follow along, just knowing what the characters represents should be enough.
 
 Next, the `/` seperates the rows. The numbers represents _that_ number of empty cells, e.g `/8` represents 8 empty cells that make up that row.
@@ -192,23 +192,21 @@ for (let i = 0; i < rows.length; i++) {
 }
 ```
 
-Next, we create an array of cells from the `rows` and `columns`. This does not contain final the `Cell` objects, it only holds the positions for the cells, i.e a1-h8, but it will help us create the final `Cell` objects.
+Next, we create an array of cells from the `rows` and `columns`. This does not contain final the `Cell` objects, it only holds the positions for the cells, i.e a1-h8, but it will help us create the final `Cell` objects. We reverse the `rows` to loop from 8 to 1. This helps us generate the cells in the order they would visually appear in the browser i.e `a8 - h8` at the top and `a1-h1` at the bottom of the board.
 
 ```java
 const board = [];
 for (let i = 0; i < cells.length; i++) {
 	//'cells', and 'pieces' have the same length of 64
 	const cell = cells[i];
-	const piece = pieces[pieces.length - i - 1];
+	const piece = pieces[i];
 	board.push(new Cell(cell, piece));
 }
 
 return board;
 ```
 
-Finally, we loop through the `cells` and `pieces` arrays. In each iteration we create a new `Cell` object from the each cell `cell[i]` and piece ` pieces[pieces.length - i - 1]` and add it to the board array.
-
-Mmmmh, wait... `pieces[pieces.length - i - 1]`? To understand why that is, consider how we generate our cells. We reverse the `rows` and loop from 8 to 1. This helps us generate the cells in the order they would visually appear in the browser i.e `a8 - h8` at the top and `a1-h1` at the bottom of the board. This means that our `cells` array reads from `black` to `white`. While our `pieces` array which we get from the `fen` reads from `white` to `black`. So in order to generate the `board`, with the right pieces we need to index the `pieces` array starting from the right(where black pieces are) hence we use `pieces[pieces.length - i - 1]` and _not_ `pieces[i]`.
+Finally, we loop through the `cells` and `pieces` arrays. In each iteration we create a new `Cell` object from the each cell `cell[i]` and piece `pieces[i]; ` and add it to the board array.
 
 Open the browser developer tools using `Ctrl + Shift + i` and try running each of the code snippets provided above to see what they output.
 
