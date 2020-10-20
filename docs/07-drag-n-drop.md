@@ -233,3 +233,5 @@ White is usually the first to make a move, so drag any white pawn ![img](../stat
 Chess.js already handles the validation for the moves so any invalid chess move will not work and the piece retains its original place.
 
 In the next section, we will be improving the user experience of our game by highlighting a user's possible moves.
+
+Find the source code for this lesson [here](https://github.com/franknmungai/live-chess/tree/06-drag-n-drop-events)
