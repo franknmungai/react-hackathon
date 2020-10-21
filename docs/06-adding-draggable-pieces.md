@@ -32,15 +32,14 @@ const Piece = ({ name, pos }) => {
 	try {
 		image = require(`../../assets/pieces/${imageName}.png`);
 	} catch (error) {
-		image = '';
+		image = require('../../assets/pieces/empty.png'); //an empty fallback image
 	}
 
 	return (
-		<div
+		<img
 			className="piece"
-			style={{
-				background: `url(${image}) center center/cover`,
-			}}
+			src={image}
+			alt=""
 			draggable={true}
 		/>
 	);
@@ -65,11 +64,9 @@ So first we use a ternary expression to derive the color of this piece based on 
 
 Next we try to load that image from our assets folder and the computed `imageName`. We use the `require` function. `require` is used to load JavaScript modules but it can also be used to load images, fonts, icons and other assets in React components. This all works due to [Webpack](https://webpack.js.org/), a package React uses behind the scenes to bundle all this dependencies into a single module. This also explains why we can `import` css files in React as though they were JavaScript bundles.
 
-We use `require` in a `try catch` block to catch errors, since empty cells do not contain any `name(s)` to pass to their `Piece` components hence no image will be resolved.
+We use `require` in a `try catch` block to catch errors, since empty cells do not contain any `name(s)` to pass to their `Piece` components hence no image will be resolved, so in the catch block, we provide an empty fallback image.
 
-## Inline styles
-
-Finally in our return statement, we have a _div_ with an inline style. To use inline styles in react, we provide a style attribue with an object as it's value, and then provide any css properties as key-values pairs for that object e.g `style={{width: 50px; height: 10px, marginTop: 10px}}`. Properties made up several names must be camelCased. In our case we provide a background property with the value of our image variable `background: url(${image}) center center/cover` this adds the image to this _div_. We also set th HTML5 `draggable` attribute `true`. It will make this element draggable.
+Finally in our return statement, we have a _img_ and we set it's `src` attribute to the value of the image we loaded dynamically. We also set the HTML5 `draggable` attribute `true`. It will make this element draggable.
 
 ## PropTypes
 

@@ -181,7 +181,7 @@ const Piece = ({ name, pos, setFromPos }) => {
 	try {
 		image = require(`../../assets/pieces/${imageName}.png`);
 	} catch (error) {
-		image = '';
+		image = require('../../assets/pieces/empty.png');
 	}
 
 	const handleDragStart = () => {
@@ -195,11 +195,10 @@ const Piece = ({ name, pos, setFromPos }) => {
 	};
 
 	return (
-		<div
+		<img
 			className="piece"
-			style={{
-				background: `url(${image}) center center/cover`,
-			}}
+			src={image}
+			alt=""
 			draggable={true}
 			ref={element}
 			onDragStart={handleDragStart}
@@ -216,11 +215,11 @@ Piece.prototype = {
 export default Piece;
 ```
 
-First, we add a _ref_ attribute to this div and provide the `element` as the ref, which we created from `useRef`. `const element = useRef()`. This helps use access this _div_ through `element.current`. This is a another use case of the `useRef` hook, it can help us access DOM elements.
+First, we add a _ref_ attribute to this _img_ and provide the `element` as the ref, which we created from `useRef`. `const element = useRef()`. This helps use access this _img_ through `element.current`. This is a another use case of the `useRef` hook, it can help us access DOM elements.
 
-Next, we provide the `handleDragStart` function to handle the `onDragStart` event. In the `handleDragStart` function, we call the `setFromPos` function which receive as a prop and pass to it the our current cell position. We also use a `setTimeout` function to hide this element to prevent it from appearing in its original postion while it's being dragged.
+Next, we provide the `handleDragStart` function to handle the `onDragStart` event. In the `handleDragStart` function, we call the `setFromPos` function which receive as a prop and pass to it the our current cell position, which is eventually received in the `Game` component. We also use a `setTimeout` function to hide this element to prevent it from appearing in its original position while it's being dragged.
 
-Finally, provide an `onDragEnd` handler function that makes this element visible once it's dropped.
+Finally, we provide an `onDragEnd` handler function that makes this element visible once it's dropped.
 
 Have you noticed the pattern here? We are using functions we receive as _props_ to pass data to our `Game` component where the move is actually taking place. We are passing some data to the parent components through function parameters. You can generally pass data to higher level components through function parameters like we did here. (Data flow in React still remains [unidirectional](https://reactjs.org/docs/thinking-in-react.html))
 
