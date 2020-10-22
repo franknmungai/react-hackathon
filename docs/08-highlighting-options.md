@@ -171,7 +171,7 @@ In the `setFromPos`, which is called once a Piece is dragged (`onDragStart`), we
 `chess.moves({ square: pos })` which returns a list of possible moves. Our `GameReducer` is called and it updates our `setPossibleMoves` array with the `action.moves` dispatched.
 
 In the `makeMove` function, we _dispatch_ an action of type `types.CLEAR_POSSIBLE_MOVES`
-Our reducer function is called and it receives this action and updates our _state_ by setting `possibleMoves: []`
+Our reducer function is called and it receives this action and updates our _state_ by setting `possibleMoves: []`. This will unhighlight any cells that had been highlighted.
 
 To highlight our cells based on whether they are candidate moves, we need to get the current array of `possibleMoves` from our state. We can do that in the `Cell` component by using the `useContext` hook and providing our `GameContext`.
 
@@ -214,6 +214,7 @@ We get the `possibleMoves` from state and then check if this Cell's position is 
 In our return statement, we wrap our `Piece` in a _div_ with a className `overlay`, we also apply the className `possible-move` conditionally if this cell is a possible move. That className adds a linear gradient to our cell to highlight it. See the modified css below
 
 ```css
+/* src/components/cell/cell-styles.css */
 .cell {
 	width: calc((100vh * 0.9) / 9.6);
 	height: calc((100vh * 0.85) / 9.4);
@@ -244,7 +245,7 @@ In our return statement, we wrap our `Piece` in a _div_ with a className `overla
 }
 ```
 
-With that in place, we now get some highlighted cells to show us the valid moves we can make (Candidate cells)
+With that in place, we now get some highlighted cells to show us the valid moves we can make whenever we drag a piece. (Candidate cells)
 
 ![img](../static/img/Screenshot7.png)
 

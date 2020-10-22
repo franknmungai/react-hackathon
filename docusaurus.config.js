@@ -24,7 +24,7 @@ module.exports = {
 				},
 				{ to: 'blog/', label: 'Blog', position: 'left' },
 				{
-					href: 'https://github.com/franknmungai',
+					href: 'https://github.com/franknmungai/react-hackathon',
 					label: 'GitHub',
 					position: 'right',
 				},
@@ -46,23 +46,23 @@ module.exports = {
 						},
 					],
 				},
-				{
-					title: 'Authors',
-					items: [
-						{
-							label: 'Frank Mungai',
-							href: 'https://github.com/franknmungai',
-						},
-						{
-							label: 'Collins Kesuibai',
-							href: 'https://github.com/collinskesuibai',
-						},
-						{
-							label: 'June Awuor',
-							href: 'https://github.com/AwuorJune',
-						},
-					],
-				},
+				// {
+				// 	title: 'Authors',
+				// 	items: [
+				// 		{
+				// 			label: 'Frank Mungai',
+				// 			href: 'https://github.com/franknmungai',
+				// 		},
+				// 		{
+				// 			label: 'Collins Kesuibai',
+				// 			href: 'https://github.com/collinskesuibai',
+				// 		},
+				// 		{
+				// 			label: 'June Awuor',
+				// 			href: 'https://github.com/AwuorJune',
+				// 		},
+				// 	],
+				// },
 
 				{
 					title: 'Community',

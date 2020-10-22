@@ -10,6 +10,7 @@ module.exports = {
 			'lesson5',
 			'lesson6',
 			'lesson7',
+			'lesson8',
 		],
 		Docusaurus: ['doc1', 'doc2', 'doc3'],
 		Features: ['mdx'],
