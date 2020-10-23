@@ -333,3 +333,7 @@ const FEN = '4k3/4P3/4K3/8/8/8/8/8 b - - 0 78';
 ```
 
 ![img](../static/img/Screenshot10.png)
+
+The code for this section can be found in [this](https://github.com/franknmungai/live-chess/tree/09-game-over) Github branch.
+
+In the next section, we will start working on real-time communication with _websockets_
