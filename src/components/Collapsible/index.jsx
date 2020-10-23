@@ -1,16 +1,21 @@
-import React, { Suspense, lazy } from 'react';
-import { importMDX } from '@mdx-js/react';
+// import React from 'react';
+// import SyntaxHighlighter from 'react-syntax-highlighter';
+// import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+// const Collapse = () => {
+// 	const codeString = '(num) => num + 1';
+// 	return (
+// 		<SyntaxHighlighter language="javascript" style={docco}>
+// 			{codeString}
+// 		</SyntaxHighlighter>
+// 	);
+// };
 
-const Collapsible = () => {
-	const Content = lazy(() => importMDX('../../docs/mdx.md'));
+// export default Collapse;
 
-	return (
-		<div>
-			<Suspense fallback={<div>Loading...</div>}>
-				<Content />
-			</Suspense>
-		</div>
-	);
+import React from 'react';
+
+const Collapse = () => {
+	return <div>Hello</div>;
 };
 
-export default Collapsible;
+export default Collapse;

@@ -1,7 +1,7 @@
 ---
 id: lesson8
-title: Highlighting Checked Cells
-sidebar_label: In Check Alert
+title: Showing check warning
+sidebar_label: Showing check warning
 slug: /09-highlight-check
 ---
 
@@ -37,7 +37,7 @@ Be sure to add this `useEffect` call inside the `Game` component body. `useEffec
 
 Inside our `useEffect`, we `dispatch` an action of type `types.SET_TURN` and also provide two values as part of the action. These are `player` and `check`. Actions (Objects passed to `dispatch`) must have a type property, this is required, and we can also pass in any other properties we might need in the reducer to update the state (this is optional). We use ` chess.turn()` to get the player who is in turn, this can either be `b`(black) or `w`(white). It is very crucial that we keep track of the turns in order to know whose turn it is when `chess.in_check()` is true, and give them a hint.
 
-That's all for the `Game` component. Find the current source code for the `Game` component here.
+That's all for the `Game` component. View the current source code for the `Game` component [here](https://gist.github.com/franknmungai/2fe4c9024cada721482b800078864f86)
 
 ## Updating the reducer
 
@@ -70,7 +70,7 @@ In `GameContext.js` at `src/context/GameContext.js` where we defined the initial
 // src/context/GameContext.js
 const initialState = {
 	possibleMoves: [],
-	turn: 'w', //w or b
+	turn: 'w', //w or b. w goes first so its the default
 	check: false, //true if the side to move (current turn) is in check.
 };
 ```
@@ -152,5 +152,7 @@ We determine the color of the Piece held by this cell and then use this color in
 Now we can see a helpful warning color on White's king who is in check.
 
 ![img](../static/img/Screenshot8.png)
+
+In the next section, we will be handling the _Game over_ case
 
 Get the code for this lesson [here](https://github.com/franknmungai/live-chess/tree/08-highlight-cell-on-check)

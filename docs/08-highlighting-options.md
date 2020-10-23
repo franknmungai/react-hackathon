@@ -120,7 +120,7 @@ When the type of action dispatched is `types.CLEAR_POSSIBLE_MOVES`, we update ou
 
 ## Actions
 
-Let's create a file for this actions in `src/context/actions.js`. Actions are just constants to express various events/intents in our app.
+Let's create a file for this actions in `src/context/actions.js`. Actions are just strings that express various events/intents in our app. We define them as variables so that they can be easy to reuse and also to avoid mistyping them.
 
 Let's add the following actions for now
 
@@ -168,7 +168,7 @@ First, we import the `useContext` hook from React. `useContext` takes in a _cont
 
 In the `setFromPos`, which is called once a Piece is dragged (`onDragStart`), we make use of the `dispatch` function to _dispatch_ an event of type
 `types.SET_POSSIBLE_MOVES`, we also provide a `moves` property whose value we get from calling
-`chess.moves({ square: pos })` which returns a list of possible moves. Our `GameReducer` is called and it updates our `setPossibleMoves` array with the `action.moves` dispatched.
+`chess.moves({ square: pos })` which returns a list of possible moves. Our `GameReducer` is called and it updates our `setPossibleMoves` array with the `action.moves` dispatched. Any the object we provide to `dispatch({})` is received by our reducer as the value of `action`
 
 In the `makeMove` function, we _dispatch_ an action of type `types.CLEAR_POSSIBLE_MOVES`
 Our reducer function is called and it receives this action and updates our _state_ by setting `possibleMoves: []`. This will unhighlight any cells that had been highlighted.

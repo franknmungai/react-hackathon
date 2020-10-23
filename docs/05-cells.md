@@ -120,7 +120,7 @@ Based on this observation, we write some conditional checks that return `true` f
 
 ![img](../static/img/board-illustration.png)
 
-Finally in let's export this from our `index.js` in functions by adding
+Finally let's export this from our `index.js` in functions by adding
 
 ```java
 // src/functions/index.js
