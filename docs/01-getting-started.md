@@ -21,9 +21,7 @@ Delete all the files in `src` folder of your project. Don't worry, we will be cr
 Create a new file `App.js` in the `src` folder we just cleared. This is our application's entry point.
 In `App.js` let's create a new React component by adding the following code.
 
-```java
-// src/App.js
-
+```java title="src/App.js"
 import React from 'react';
 import './App.css';
 
@@ -38,9 +36,7 @@ This a React functional component. It is a regular JavaScript function that retu
 Since we are importing `App.css`
 Let's create a new file `App.css` in `src` to add some base styling
 
-```css
-/* src/App.css */
-
+```css title="src/App.css"
 * {
 	margin: 0;
 	padding: 0;
@@ -56,9 +52,7 @@ Let's use this component to view some content on our browser
 
 Create a new file `index.js` in the `src` folder and add the following code
 
-```java
-// src/index.js
-
+```java title="src/index.js"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';

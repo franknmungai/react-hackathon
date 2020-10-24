@@ -67,8 +67,7 @@ In chess, there are four scenarios that would lead to a game being considered ov
 
 To get started, let's create a function `getGameOverState` in `src/functions/game-over.js` that checks through this cases.
 
-```java
-// src/functions/game-over.js
+```java title="src/functions/game-over.js"
 /**
  *
  * @param {*} chess An instance of the current Chess object
@@ -104,8 +103,7 @@ Next, we use this function in our `Game` component to determine the game over st
 We can check for game over status in our `useEffect` call that runs everytime a move is made (the _fen_ is updated).
 Initially we were only dispatching the event `type: types.SET_TURN`, but now, we first get the game over status by calling `getGameOverState(chess)`. It returns the `gameOver` value and the status. If `gameOver` is _true_, we dispatch an action of type `types.GAME_OVER`, we also provide the `status` and the `player` in turn as part of the action.
 
-```java {3-7}
-// src/pages/Game/index.jsx
+```java {3-7} title="src/pages/Game/index.jsx"
 	useEffect(() => {
 		const [gameOver, status] = getGameOverState(chess);
 		if (gameOver) {
@@ -122,7 +120,7 @@ Initially we were only dispatching the event `type: types.SET_TURN`, but now, we
 
 Let's update the GameReducer function which updates our Game state. In `src/context/GameReducer.js` add a new case for the `types.GAME_OVER` action.
 
-```java
+```java title="src/context/GameReducer.js"
 case types.GAME_OVER:
     return {
         ...state,
@@ -136,8 +134,7 @@ We set `gameOver` to true, and set `status` and `turn` to what we receive from `
 
 Let's add the `gameOver` and `status` value as part of our initial state in `src/context/GameContext.js`
 
-```java
-// src/context/GameContext.js
+```java title="src/context/GameContext.js"
 const initialState = {
 	possibleMoves: [],
 	turn: 'w', //w or b
@@ -306,7 +303,7 @@ const Game = () => {
 ```
 
 :::note
-Ensure that the early conditional _return_ for _gameOver_ is used after all your hooks have been defined.
+Ensure that the early conditional _return_ for _gameOver_ is used after all your hooks have been declared.
 
 ```java
  if (gameOver) {
