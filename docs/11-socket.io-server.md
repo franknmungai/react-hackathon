@@ -1,7 +1,7 @@
 ---
 id: lesson10
-title: Socket.io server
-sidebar_label: Socket.io server
+title: Socket.io Server
+sidebar_label: Socket.io Server
 slug: /11-socket.io-server
 ---
 

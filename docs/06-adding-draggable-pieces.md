@@ -9,7 +9,7 @@ slug: /06-adding-draggable-pieces
 
 Let's add draggable chess pieces in our cells.
 
-First we need some images for chess the pieces, in `src` let's add a new folder named `assets`. It will contain our app's assets such as images. Let's create a new folder in `assets` called `pieces`. This folder will hold the images of our chess pieces. Download this images from [here](https://github.com/franknmungai/live-chess/tree/main/src/assets/pieces) and save them inside this `pieces` folder (`src/assets/pieces`) or you can download all the assets used in this project from [here](../static/assets.rar)
+First we need some images for chess the pieces, in `src` let's add a new folder named `assets`. It will contain our app's assets such as images. Let's create a new folder in `assets` called `pieces`. This folder will hold the images of our chess pieces. Download all the assets used in this project from [here](../static/assets.rar)
 
 ## Creating the `Piece` component
 

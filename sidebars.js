@@ -13,8 +13,9 @@ module.exports = {
 			'lesson8',
 			'lesson9',
 			'lesson10',
+			'lesson11',
 		],
-		Docusaurus: ['doc1', 'doc2', 'doc3'],
-		Features: ['mdx'],
+		// Docusaurus: ['doc1', 'doc2', 'doc3'],
+		// Features: ['mdx'],
 	},
 };
