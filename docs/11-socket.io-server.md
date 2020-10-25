@@ -171,3 +171,91 @@ const removePlayer = (playerID) => {
 	}
 };
 ```
+
+Finally, we export this functions from our module
+
+```js title="/chess-server/src/game.js"
+module.exports = {
+	addPlayer,
+	game,
+	removePlayer,
+};
+```
+
+Find the complete code snippet for `src/game.js` in [this](https://gist.github.com/franknmungai/f830e4fa946178f0e447bcde1c8c279c) Gist.
+
+## Socket events
+
+In our `index.js` file, let's set up our Websockets connection
+
+```js title="src/index.js"
+io.on('connection', (socket) => {
+	socket.on('join', ({ name, gameID }, callback) => {
+		const { error, player, opponent } = addPlayer({
+			name,
+			playerID: socket.id,
+			gameID,
+		});
+		if (error) {
+			return callback({ error });
+		}
+		socket.join(gameID);
+		callback({ color: player.color });
+
+		//send welcome message to player1, and also send the opponent player's data
+		socket.emit('welcome', {
+			message: `Hello ${player.name}, Welcome to the game`,
+			opponent,
+		});
+
+		// Tell player2 that player1 has joined the game.
+		socket.broadcast.to(player.gameID).emit('opponentJoin', {
+			message: `${player.name} has joined the game. `,
+			opponent: player,
+		});
+
+		if (game(gameID).length >= 2) {
+			const white = game(gameID).find((player) => player.color === 'w');
+			io.to(gameID).emit('message', {
+				message: `Let's start the game. White (${white.name}) goes first`,
+			});
+		}
+	});
+
+	socket.on('move', ({ from, to, gameID }) => {
+		socket.broadcast.to(gameID).emit('opponentMove', { from, to });
+	});
+
+	socket.on('disconnect', () => {
+		const player = removePlayer(socket.id);
+
+		if (player) {
+			io.to(player.game).emit('message', {
+				message: `${player.name} has left the game.`,
+			});
+			socket.broadcast.to(player.game).emit('opponentLeft');
+		}
+	});
+});
+```
+
+We first listen for new connections `io.on('connection')`. For every connection to our web server, we get a `socket` object which represents that particular connection. We register a listener for the `join` event. This will be emitted from our client in order to join a game, and it receives an object with the `name` and `gameID` and a callback function from the client. We use the `addPlayer` function to join this game. If we get an error, we pass this to the callback function to be received by the client, if it was successful, we return the color assigned to the player via the callback.
+
+We also add this player to the game `socket.join(gameID)`. (In _socket.io_ terms, it's called a _room_)
+
+We emit a `welcome` event to this socket/connection through `socket.emit()` and provide a `message` and the `opponent` for this player. The opponent might be _null_ of this socket is the first player.
+
+Next, we emit the `opponentJoin` event to the other player in the game, `socket.broadcast.to(player.gameID)` (in case one had joined before), and send them their opponent data.
+`socket.broadcast` sends an event to the other connected sockets/clients in the same game/room.
+
+Next, we check if game is full `game(gameID).length >= 2`, if _true_, we emit a _message_ event to all players using `io.to(gameID).emit` to inform them to start the game.
+
+When a client makes a move, they will emit a _move_ event. We listen for this event in
+`socket.on('move')` and inform the other client of their opponents move by emiting the _opponentMove_ event and passing some data about the move `socket.broadcast.to(gameID).emit('opponentMove', { from, to })`
+
+Finally, we set up a listener for _disconnect_ `socket.on('disconnect')` which is emitted when a socket is disconnected e.g by closing the app on their browser.
+We use the `removePlayer` function to remove this player from our games object, and then emit a _message_ event to the other player to inform them. We also emit an additional _opponentLeft_ event using `socket.broadcast.to(player.game).emit('opponentLeft')`.
+
+That's all we need to setup our server. Find the complete code snippet for the server, `src/index.js` [here](https://gist.github.com/franknmungai/7d83a7259f48aff7937fe2da6a72bf2a)
+
+Get the complete server-side code on [GitHub](https://github.com/franknmungai/live-chess-server)
