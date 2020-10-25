@@ -12,6 +12,7 @@ module.exports = {
 			'lesson7',
 			'lesson8',
 			'lesson9',
+			'lesson10',
 		],
 		Docusaurus: ['doc1', 'doc2', 'doc3'],
 		Features: ['mdx'],

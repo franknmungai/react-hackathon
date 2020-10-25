@@ -5,7 +5,7 @@ sidebar_label: Getting started
 slug: /01-get-started
 ---
 
-To get started, lets create a new React project by running
+To get started, let's create a new React project by running this command from the folder you wish to save this project in.
 
 ```
 npx create-react-app chess-client

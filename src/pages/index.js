@@ -45,8 +45,7 @@ const features = [
 				as Components, props and state and hooks such as <code>useState</code>{' '}
 				<code>useEffect</code> <code>useRef</code> <code>useReducer</code>.
 				Creating Layouts with <code>CSS Grid</code> How to use{' '}
-				<code>socket.io</code> and <code>WebRTC</code> with{' '}
-				<code> peer.js</code> and so much more. Let's get started.
+				<code>socket.io</code> and so much more. Let's get started.
 			</>
 		),
 	},
