@@ -7941,6 +7941,11 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
+publish-gh-pages@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/publish-gh-pages/-/publish-gh-pages-0.0.1.tgz#2e255e0ed5e6fa6a489cf1dcb7ac27b3d498de07"
+  integrity sha512-e+Gj3UMG7R6y4fiRQwv0m6YkiPJ6nnH+xY+oxpS+7dLHqrs5CLE8LlE0GmCesiGjZ7Wrg3/t/IVBKEHuqF7tZQ==
+
 pump@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pump/-/pump-2.0.1.tgz#12399add6e4cf7526d973cbc8b5ce2e2908b3909"

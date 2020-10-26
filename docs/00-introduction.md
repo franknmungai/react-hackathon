@@ -5,7 +5,7 @@ sidebar_label: Introduction
 slug: /introduction
 ---
 
-In this tutorial, we will be creating a chess game that allows players to play online, and even communicate with each other through video chat. This will make it a truly live game experience.
+In this tutorial, we will be creating a chess game that allows players to create and share games and play online.
 
 This tutorial is perfect for beginner learners with a good understanding of fundamental concepts in JavaScript such as variables, functions, conditionals, objects, arrays and arrays methods, and ES6+ features.
 Basic HTML and CSS knowledge is also needed to follow along
@@ -13,23 +13,19 @@ No knowledge on React and Node.js will be required. Theses will be explained alo
 
 ## Techonologies
 
-React, Node.js, socket.io, WebRTC
+React, Node.js, socket.io
 
 ## What you will learn:
 
-1. The basics of React, components, props and state.
+1. The basics of React, components, _props_ and _state_.
 
-2. React hooks. <code>useState</code>, <code>useEffect</code>, <code>useRef</code> and more
+2. React hooks. `useState`, `useEffect`, `useRef`, `useContext` and more
 
 3. CSS grid layouts
 
-4. Working with Material-ui components
+4. Using Drag and Drop events
 
-5. Using Drag and Drop events
-
-6. Web sockets for real-time client-server communication using <code>socket.io</code>
-
-7. Adding Video streaming using <code>WebRTC</code> and <code>peer.js</code>
+5. Web sockets for real-time client-server communication using `socket.io`
 
 ## Project overview.
 

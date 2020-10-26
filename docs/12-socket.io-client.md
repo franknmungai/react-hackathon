@@ -72,9 +72,9 @@ const makeMove = (pos) => {
 };
 ```
 
-That's all we need to connect and communicate between two players through a web-server. Find the code snippet for the `Game` component in [this](https://gist.github.com/franknmungai/9f0906536381a10db9ee4ff6bbb7e44e) gist.
+That's all we need to connect and communicate between two players through a web-server. Find the code snippet for the `Game` component in [this gist](https://gist.github.com/franknmungai/9f0906536381a10db9ee4ff6bbb7e44e).
 
-[Section branch](https://github.com/franknmungai/live-chess/tree/10-socket-io-client)
+The code for the project upto this section can be found in [this branch](https://github.com/franknmungai/live-chess/tree/10-socket-io-client)
 
 To test this out, make sure the server is running on `localhost:5000` and open the react app in two different tabs or windows.
 

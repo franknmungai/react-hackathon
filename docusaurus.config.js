@@ -2,12 +2,12 @@ module.exports = {
 	title: 'React Live-Chess tutorial',
 	tagline:
 		'Learn React, Socket.io and WebRTC by creating an online multiplayer chess game',
-	url: 'https://your-docusaurus-test-site.com',
-	baseUrl: '/',
+	url: 'https://franknmungai.github.io',
+	baseUrl: '/react-hackathon/',
 	onBrokenLinks: 'throw',
 	favicon: 'img/favicon.ico',
-	organizationName: 'facebook', // Usually your GitHub org/user name.
-	projectName: 'docusaurus', // Usually your repo name.
+	organizationName: 'franknmungai', // Usually your GitHub org/user name.
+	projectName: 'react-hackathon', // Usually your repo name.
 	themeConfig: {
 		navbar: {
 			title: 'React Live-Chess',
