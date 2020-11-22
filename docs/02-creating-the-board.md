@@ -13,6 +13,8 @@ A chessboard consists of 64 equal squares arranged in eight rows and eight colum
 
 It will look something like this:
 
+<!-- Todo add screenshot -->
+
 In order to get started, let's install [chess.js](https://github.com/jhlywa/chess.js)
 
 In your project root directory, run
@@ -21,9 +23,21 @@ In your project root directory, run
 npm install chess.js
 ```
 
-Create a folder in `src`called `pages`, our App will consist of several pages. Create a new folder `Game` and a new file inside `Game`, name it `index.jsx`. This will be the entry point to the page
+Create a folder in `src`called `pages`, our App will consist of several pages. Create a new folder `Game` and a new file inside `Game`, name it `index.jsx`. This will be the entry point to the page. (_jsx_ is a valid file name extension for JavaScript React)
 
-<!-- Todo Folder structure -->
+```
+src
+├───pages
+├───App.js
+├───App.css
+└───index.js
+```
+
+```
+pages
+    └───Game
+        └───index.jsx
+```
 
 Inside `src/pages/Game/index.jsx` we will be creating a component that will be main game controller. It will render the board and hold our game's data(state)
 

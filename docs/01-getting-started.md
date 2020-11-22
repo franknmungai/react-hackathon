@@ -5,7 +5,7 @@ sidebar_label: Getting started
 slug: /01-get-started
 ---
 
-To get started, let's create a new React project by running this command from the folder you wish to save this project in.
+To get started, let's create a new React project. Run this command in your terminal in the folder you wish to save this project in.
 
 ```
 npx create-react-app chess-client
@@ -16,9 +16,10 @@ This creates a new app with React and installs the dependencies. Run `cd chess-c
 
 ![img](../static/img/Screenshot1.png)
 
-Delete all the files in `src` folder of your project. Don't worry, we will be creating them from scratch
+Delete all the files in the `src` folder of your project. Don't worry, we will be creating them from scratch
 
 Create a new file `App.js` in the `src` folder we just cleared. This is our application's entry point.
+
 In `App.js` let's create a new React component by adding the following code.
 
 ```java title="src/App.js"
@@ -32,9 +33,16 @@ function App() {
 export default App;
 ```
 
-This a React functional component. It is a regular JavaScript function that returns some HTML tags, This special HTML in JS syntax is known as JSX (JavaScript XML). We have to import React to use JSX.
-Since we are importing `App.css`
-Let's create a new file `App.css` in `src` to add some base styling
+This a React functional component. It is a regular JavaScript function that returns some HTML tags.
+
+This special HTML in JS syntax is known as JSX (JavaScript XML). We have to import React to use JSX.
+Since we are importing `App.css` let's create a new file `App.css` in `src` to add some base styling.
+
+```
+src
+├───App.js
+└───App.css -> create this file
+```
 
 ```css title="src/App.css"
 * {
@@ -48,14 +56,13 @@ body {
 }
 ```
 
-Let's use this component to view some content on our browser
+Let's use this component to view some content on our browser.
 
 Create a new file `index.js` in the `src` folder and add the following code
 
 ```java title="src/index.js"
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 
 ReactDOM.render(
@@ -71,8 +78,8 @@ We call `ReactDOM.render()` passing our `App` component as the first argument an
 
 Our component is wrapped in `React.StrictMode`, this is optional but gives us useful warnings about any possible issues in our components.
 
-Notice how we use our component as `<App/>`. React components are used like HTML tags, and they must start with an uppercase letter.
+Notice how we use our component as `<App/>`. React components are used like HTML tags, and they must start with an uppercase letter to distinguish them from regular HTML tags.
 
-Save and check your browser, the App should now look as shown
+Save and check your browser on `localhost:3000`, the App should now look as shown
 
 ![img](../static/img/Screenshot2.png)
