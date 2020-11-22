@@ -29,9 +29,7 @@ Inside `src/pages/Game/index.jsx` we will be creating a component that will be m
 
 Let's add create a new component `Game` and add some game data.
 
-```java
-// src/pages/Game/index.jsx
-
+```java title="src/pages/Game/index.jsx"
 import React, { useState, useRef } from 'react';
 import Chess from 'Chess.js';
 
@@ -53,21 +51,19 @@ We can pass an initial value to `useState`, which in this case is the `FEN` vari
 
 Destructuring is a syntax that allows us to get elements from an array. It can also be applied to an object to get it's properties. Here is a snippet showing how it works
 
-```java
-//* array destructuring
+```java title="Destructuring"
+// * Array destructuring.
 const fruits = ['orange', 'apples', 'berries' ];
 const [one, two, three] = fruits; //we destructure items based on their respective index
 // one = 'orange'
 // two = 'apples'
 // three = 'berries'
 
-//* object destructuring
+//* Object destructuring
 const person = {name: 'Nel', address: 'South 7' };
 const {name, address} = person; //we can destructure properties from an object
 // name = 'Nel'
 // address = 'South 7'
-
-
 ```
 
 ## FEN
@@ -114,7 +110,7 @@ A `Cell` object will have a position, e.g `a1` and the piece it holds, e.g `k` f
 
 Above the `createBoard` function, we have a helper function `range`. It takes an integer, `n` and returns an array of items between 1 - n. It will be useful in a bit.
 
-```java
+```java title="/src/functions/create-board.js"
 class Cell {
 	constructor(pos, piece) {
 		this.pos = pos;
@@ -126,26 +122,14 @@ class Cell {
 const range = (n) => {
 	return Array.from({ length: n }, (_, i) => i + 1);
 };
-
-/**
- *
- * @param {String} fenString rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
- * @returns {Cell[]}
- */
 export const createBoard = () => {
 
 }
-
 ```
 
-:::tip
-You can ignore the comment before the function. It's known as a [JSDoc](https://jsdoc.app/about-getting-started.html) comment and it helps give annotations about the parameters and return type of a function. It also improves [intellisense](https://code.visualstudio.com/docs/editor/intellisense)/ code auto-completion to the users of the function.
-:::
-
-```java
+```java title="/src/functions/create-board.js"
 // The rest of the code in this file has been left out to keep this short
 export const createBoard = (fenString) => {
-	// src/functions/create-board.js
 
 	const fen = fenString.split(' ')[0]; //Get the first portion
 
@@ -156,7 +140,7 @@ export const createBoard = (fenString) => {
 
 Inside `createBoard`, we use `fenString.split(' ')[0].split()` to get the first portion of the string, which is what we need. Next we apply `fen.split('/').join('')` to convert the FEN into one long continuous string `rnbqkbnrpppppppp8888PPPPPPPPRNBQKBNR`
 
-```js
+```js title="/src/functions/create-board.js"
 // still inside createBoard function
 
 let pieces = Array.from(fenPieces);
@@ -175,7 +159,7 @@ Finally, we appy `.flat()` to extract items from the nested array we introduced.
 
 Read more about this array methods we have used [Array.from](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from), [.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach), [.flat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat). [.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 
-```java
+```java title="/src/functions/create-board.js"
 const rows = range(8)
 	.map((n) => n.toString())
 	.reverse(); //["8", "7", "6", "5", "4", "3", "2", "1"]
@@ -194,7 +178,7 @@ for (let i = 0; i < rows.length; i++) {
 
 Next, we create an array of cells from the `rows` and `columns`. This does not contain final the `Cell` objects, it only holds the positions for the cells, i.e a1-h8, but it will help us create the final `Cell` objects. We reverse the `rows` to loop from 8 to 1. This helps us generate the cells in the order they would visually appear in the browser i.e `a8 - h8` at the top and `a1-h1` at the bottom of the board.
 
-```java
+```java title="/src/functions/create-board.js"
 const board = [];
 for (let i = 0; i < cells.length; i++) {
 	//'cells', and 'pieces' have the same length of 64

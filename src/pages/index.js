@@ -12,12 +12,10 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_mountain.svg',
 		description: (
 			<>
-				In this tutorial, we will be creating a chess game that allows players
-				to play online, and even communicate with each other through video chat.
-				This will make it a truly live game experience.
+				In this tutorial, we will be creating a multiplayer chess game. Players will be able to create games, invite opponents and play online.
 				<h4>
 					View the finished application{' '}
-					<a href="https://friendlychat-a2335.firebaseapp.com/" target="_blank">
+					<a href="https://stack-chess-tutorial.netlify.app/" target="_blank">
 						here
 					</a>
 				</h4>
@@ -32,7 +30,7 @@ const features = [
 				All you need is an intermdiate understanding of JavaScript. Not familiar
 				with React or socket.io? No worries. All the React and Node.js concepts
 				will be explained along the way, step by step. Everything will be broken
-				down clearly and easy to grasp.
+				down in a clear, easy to grasp way.
 			</>
 		),
 	},
@@ -41,10 +39,10 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_react.svg',
 		description: (
 			<>
-				By the end of this tutorial, you will be familiar with React basics such
-				as Components, props and state and hooks such as <code>useState</code>{' '}
-				<code>useEffect</code> <code>useRef</code> <code>useReducer</code>.
-				Creating Layouts with <code>CSS Grid</code> How to use{' '}
+				By the end of this tutorial, you will be familiar with the basics of React such
+				as components, props and state, hooks such as <code>useState</code>{' '}
+				<code>useEffect</code> <code>useRef</code> <code>useReducer</code>,
+				creating layouts with CSS Grid, creating real-time apps with {' '}
 				<code>socket.io</code> and so much more. Let's get started.
 			</>
 		),
@@ -72,7 +70,7 @@ function Home() {
 	return (
 		<Layout
 			title={`Hello from ${siteConfig.title}`}
-			description="Description will go into a meta tag in <head />"
+			description="Learn React by creating an online multiplayer chess game"
 		>
 			<header className={clsx('hero hero--primary', styles.heroBanner)}>
 				<div className="container">

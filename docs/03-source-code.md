@@ -7,7 +7,7 @@ slug: /03-source-code
 
 Here is the complete source code for the previous section
 
-```java
+```java title="/src/functions/create-board.js"
 class Cell {
 	constructor(pos, piece) {
 		this.pos = pos;
@@ -68,6 +68,8 @@ export const createBoard = (fenString) => {
 console.log(
 	createBoard('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
 );
-
-
 ```
+
+:::note
+You can ignore the comment before the function. It's known as a [JSDoc](https://jsdoc.app/about-getting-started.html) comment and it helps give annotations about the parameters and return type of a function. It also improves [intellisense](https://code.visualstudio.com/docs/editor/intellisense)/ code auto-completion to the users of the function.
+:::

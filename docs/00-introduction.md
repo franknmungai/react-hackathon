@@ -8,8 +8,9 @@ slug: /introduction
 In this tutorial, we will be creating a chess game that allows players to create and share games and play online.
 
 This tutorial is perfect for beginner learners with a good understanding of fundamental concepts in JavaScript such as variables, functions, conditionals, objects, arrays and arrays methods, and ES6+ features.
-Basic HTML and CSS knowledge is also needed to follow along
-No knowledge on React and Node.js will be required. Theses will be explained along the way.
+Basic HTML and CSS knowledge is also needed to follow along.
+
+No knowledge on React and Node.js will be required. These will be explained along the way.
 
 ## Techonologies
 

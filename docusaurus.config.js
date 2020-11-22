@@ -1,9 +1,9 @@
 module.exports = {
 	title: 'React Live-Chess tutorial',
 	tagline:
-		'Learn React, Socket.io and WebRTC by creating an online multiplayer chess game',
-	url: 'https://franknmungai.github.io',
-	baseUrl: '/react-hackathon/',
+		'Learn JavaScript, React, Node.js and Socket.io by creating an online multiplayer chess game',
+	url: 'https://stack-chess-tutorial.netlify.app/',
+	baseUrl: '/',
 	onBrokenLinks: 'throw',
 	favicon: 'img/favicon.ico',
 	organizationName: 'franknmungai', // Usually your GitHub org/user name.
@@ -22,7 +22,11 @@ module.exports = {
 					label: 'Learn',
 					position: 'left',
 				},
-				{ to: 'blog/', label: 'Blog', position: 'left' },
+				{
+					to: 'https://stack-chess.netlify.app/',
+					label: 'Demo',
+					position: 'left',
+				},
 				{
 					href: 'https://github.com/franknmungai/react-hackathon',
 					label: 'GitHub',
@@ -37,12 +41,29 @@ module.exports = {
 					title: 'Docs',
 					items: [
 						{
-							label: 'Style Guide',
+							label: 'Introduction',
 							to: 'docs/introduction',
 						},
 						{
-							label: 'Second Doc',
-							to: 'docs/doc2/',
+							label: 'Getting Started',
+							to: 'docs/01-get-started',
+						},
+					],
+				},
+				{
+					title: 'Code',
+					items: [
+						{
+							label: 'GitHub',
+							to: 'https://github.com/franknmungai/live-chess',
+						},
+						{
+							label: 'Gists',
+							to: 'https://gist.github.com/franknmungai',
+						},
+						{
+							label: 'Live App',
+							to: 'https://stack-chess.netlify.app/',
 						},
 					],
 				},
@@ -69,16 +90,20 @@ module.exports = {
 					items: [
 						{
 							label: 'Blog',
-							to: 'blog',
+							to: 'https://frank-ng.netlify.app/',
 						},
 						{
 							label: 'GitHub',
 							href: 'https://github.com/franknmungai/react-hackathon',
 						},
+						{
+							label: 'Twitter',
+							href: 'https://twitter.com/FrankMungaiN',
+						},
 					],
 				},
 			],
-			copyright: `Copyright © ${new Date().getFullYear()} LiveChess, Inc. Built with Docusaurus.`,
+			copyright: `Copyright © ${new Date().getFullYear()} StackChess. Built with Docusaurus.`,
 		},
 	},
 	presets: [

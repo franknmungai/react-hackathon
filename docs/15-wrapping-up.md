@@ -373,3 +373,21 @@ const Game = () => {
 When we receive the `opponentMove` event, we also set a message `dispatch(setMessage('Your Turn'))` which displays a Snackbar to show a user that its their turn
 
 <!-- Finally, we need to higlight the opponent's previous moves to -->
+
+## Challenges
+
+We have done a lot so far and the project is pretty solid right now.
+
+Here are a few features you can try adding on your own to further improve the game and practise on your React skills.
+
+1. Highlight the opponent's previous moves in a different color in order to make them visible to the other player to help them in deciding where to play next. You can get these moves from the `socket.on('opponentMove')` event, update them in the `GameContext` and use them in the `Cell` component to determine which _cells_ to highlight, just like we did with highlighting candidate moves in [section 8](/08-highlighting-options.md)
+
+2. Show each player's captured pieces at the bottom of the `Player` component. To help you with this,
+   use `chess.move` which we used for making our moves. After making a successful move, it returns an object with various useful properties as shown
+
+```js
+chess.move({ from: 'g2', to: 'g3' });
+// -> { color: 'b', from: 'e5', to: 'f4', flags: 'c', piece: 'p', captured: 'p', san: 'exf4' }
+```
+
+The `flag` property will have a value of `c` if the move was a capture. It will also contain a `captured` property with the name of the piece that was captured. You can store this in the `GameContext` and then create a component that gets the captured pieces from `GameContext` and displays them.
