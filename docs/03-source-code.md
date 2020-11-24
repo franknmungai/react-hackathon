@@ -71,5 +71,5 @@ console.log(
 ```
 
 :::note
-You can ignore the comment before the function. It's known as a [JSDoc](https://jsdoc.app/about-getting-started.html) comment and it helps give annotations about the parameters and return type of a function. It also improves [intellisense](https://code.visualstudio.com/docs/editor/intellisense)/ code auto-completion to the users of the function.
+You can ignore the comment before the function. It's a [JSDoc](https://jsdoc.app/about-getting-started.html) comment and it helps give annotations about the parameters and return type of a function. It also improves [intellisense](https://code.visualstudio.com/docs/editor/intellisense)/ code auto-completion to the users of the function.
 :::
