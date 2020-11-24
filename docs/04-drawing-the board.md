@@ -2,7 +2,7 @@
 id: lesson3
 title: Drawing the Board
 sidebar_label: Drawing the Board
-slug: /04-adding-pieces
+slug: /04-drawing-the-board
 ---
 
 Let's use the `createBoard` function we wrote in the previous section to create the Chess board component.
@@ -89,7 +89,7 @@ useEffect(() => {
 
 ## props
 
-As part of the return statement for this component, we have a component called` <Board />`. We are providing a special _attribute_ to this component. In React, this is called a _prop_, it is a value that is provided to a component. Components can receives props, just the same way functions can receive parameters. A value for a _prop_ can be any valid JavaScript data type. In this case, we are providing a prop whose name is _cells_ and it's value is the `board` which we have in state. We can provide _any_ name to _prop_ as long as it's a valid variable name.
+As part of the return statement for this component, we have a component called` <Board />`. We are providing a special _attribute_ to this component. In React, this is called a _prop_. It is a property that is provided to a component. Components can receives _props_, just the same way functions can receive arguments. A value for a _prop_ can be any valid JavaScript data type. In this case, we are providing a prop whose name is _cells_ and it's value is the `board` which we have in state. We can provide _any_ name to _prop_ as long as it's a valid variable name.
 _props_ are one way to share data between react components.
 
 Let's create this board component. Inside of `src`, let's add a new folder called `components`.

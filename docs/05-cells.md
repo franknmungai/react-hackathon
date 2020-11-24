@@ -7,22 +7,25 @@ slug: /05-adding-cells
 
 ## Creating the `Cell` component
 
-In the previous section, we worked on creating the board component. However it is not fully complete. The board needs distinct cells, this are the small squares that hold the pieces. As mentioned before, the board has 64 cells arranged in 8 rows and 8 columns. The cells are alternately colored light and dark. (You can read more about how a chess board is setup [here](https://docs.kde.org/trunk5/en/kdegames/knights/board.html), this is optional as we will be going through all this)
+In the previous section, we worked on creating the board component. However it is not fully complete. The board needs distinct cells. This are the small squares that hold the pieces. As mentioned before, the board has 64 cells arranged in 8 rows and 8 columns. The cells are alternately colored light and dark. (You can read more about how a chess board is set up [here](https://docs.kde.org/trunk5/en/kdegames/knights/board.html), this is optional as we will be going through all this)
 
 ![img](../static/img/board-illustration.png)
 
-The cells are a crucial component in this game, they help us identify the position of each of the pieces and determine how the pieces can be moved.
+The cells are a crucial component of this game, they help us identify the position of each of the pieces and determine how the pieces can be moved.
 
-In `src/components`, let's create a new folder named `cell` and create a new file inside
-`index.jsx`, this will be hold our cell component. Let's create another file inside `cell` and save it as `cell-styles.css`. It will contain the styling for this component.
+In `src/components`, let's create a new folder named `cell` and create a new file
+`index.jsx` in `/cell`, this will hold our cell component. Let's create another file inside `cell` and save it as `cell-styles.css`. It will contain the styling for this component.
 
-<!-- Todo: Add folder structure -->
+```
+components
+    └───cell
+        |───index.jsx
+        └───cell-styles.css
+```
 
-Let's add the following code to the cell component in `/cell/index.jsx`
+Let's add the following code to the cell component in `components/cell/index.jsx`
 
-```java
-// src/components/cell/index.jsx
-
+```js title="/src/components/cell/index.jsx"
 import React from 'react';
 import './cell-styles.css';
 import { isLightSquare } from '../../functions/';
@@ -40,10 +43,10 @@ We create a functional component called `Cell`. This component will receive some
 This is the index of the cell in the board array.
 We will be using the `index` to determine whether a cell should be light or dark.
 
-Inside our component, we are calling the `isLightSquare` function, which we imported from `functions` and providing the cell's position and index as its arguments. This function determines whether a cell should be styled as light or dark based on this parameters. It returns `true` if a cell should be styled as a light square. We will be creating this function shortly
+Inside our component, we are calling the `isLightSquare` function, which we import from `functions` and providing the cell's position and index as its arguments. This function determines whether a cell should be styled as light or dark based on this parameters. It returns `true` if a cell should be styled as a light square. We will be creating this function shortly
 
 `Cell` returns a `div` with some text content passed as `cell.pos` to render the cell's position
-i.e `a1`. We wrap this in braces `{}` as all expressions inside our _JSX_ markup should be.
+e.g `a1`. We wrap this in braces `{}` as all expressions inside our _JSX_ markup should be.
 
 ## Dynamic classNames in JSX
 
@@ -55,9 +58,7 @@ This shows how we can use template strings to provide dynamic classNames based o
 
 We already importing our stylesheet. Let's add some css in `cell/cell-styles.css` to style the component.
 
-```css
-/* src/components/cell/cell-styles.css */
-
+```css title="/src/components/cell/cell-styles.css"
 .cell {
 	text-align: center;
 	padding: 0.25rem 0.35rem;
@@ -83,17 +84,16 @@ Next we define `light` and `dark` classes that set the background color.
 
 ## Defining isLightSquare function
 
-Let's create a the `isLightSquare` function we used earlier in our component that determines whether a square should be styled as light or dark. Having alternate dark and light squares is just for aesthetics and doesn't make a cell special in any way.
+Let's create the `isLightSquare` function we used earlier in our component that determines whether a square should be styled as light or dark. Having alternate dark and light squares is just for aesthetics and color doesn't make a cell special in any way.
 
 Inside our `functions` folder, `src/functions`, let's create a new file and save it as `light-square.js`. Within this file let's define the `isLightSquare` function.
 
-```java
-// src/functions/light-square.js
-
+```java title="/src/functions/light-square.js"
 /**
  * @param {string} position The position of the cell e.g a1
  * @param {number} index.
- * @returns {boolean} true if a square/cell should be labelled as light based on its index
+ * @returns {boolean} true if a square/cell should be labelled as light
+  based on its index
  */
 export const isLightSquare = (position, index) => {
 	const row = position[1];
@@ -114,7 +114,7 @@ export const isLightSquare = (position, index) => {
 It takes two arguments, the `position` of a cell and its `index`. Recall that the position of a cell consists of its column and row `a1`.
 Next we create a helper function that determines if a number provided is _even_ by returning `true` and false if otherwise.
 
-If you examine a chess board closely, you will notice that if the number of a row is _odd_, then all the cells in _even_ positions are light-colored and if a row is _even_, then all the cells in _odd_ positions are dark. This assumes that we count our cells from 1, 2 and so on, that's why we use `index + 1` as it is easier to count and determine this from 1 instead of 0.
+If you examine a chess board closely, you will notice that if the number of a row is _odd_, then all the cells in _even_ positions are light-colored and if a row is _even_, then all the cells in _odd_ positions are light-colored. This assumes that we count our cells from 1, 2 and so on, that's why we use `index + 1` as it is easier to count and determine this from 1 instead of 0.
 
 Based on this observation, we write some conditional checks that return `true` from this
 
@@ -122,8 +122,7 @@ Based on this observation, we write some conditional checks that return `true` f
 
 Finally let's export this from our `index.js` in functions by adding
 
-```java
-// src/functions/index.js
+```java title="/src/functions/index.js"
 export * from './create-board';
 export * from './light-square'; //add this line
 
@@ -131,9 +130,7 @@ export * from './light-square'; //add this line
 
 With that, let's go to our `Board` component in `src/components/board/index.jsx` and make use of the `Cell` component we have created.
 
-```java
-// src/components/board/index.jsx
-
+```java title="/src/components/board/index.jsx"
 import React from 'react';
 import './board.styles.css';
 import Cell from '../cell';
