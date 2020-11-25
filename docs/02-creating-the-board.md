@@ -11,9 +11,9 @@ Next we will be creating a chess board.
 
 A chessboard consists of 64 equal squares arranged in eight rows and eight columns.
 
-It will look something like this:
+Here is a sample of what we will have:
 
-<!-- Todo add screenshot -->
+![img](../static/img/Screenshot14.png)
 
 In order to get started, let's install [chess.js](https://github.com/jhlywa/chess.js)
 

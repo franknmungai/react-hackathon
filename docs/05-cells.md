@@ -156,4 +156,4 @@ Finally this is what we have at the moment. A step closer 😊
 
 You can find the code for this lesson [here](https://github.com/franknmungai/live-chess/tree/04-creating-the-cells)
 
-In the next section, we will be adding a `Piece` component to hold the chess pieces inside our _Cells_.
+In the next section, we will be adding a `Piece` component for the chess pieces in our _Cells_.
