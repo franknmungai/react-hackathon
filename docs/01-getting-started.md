@@ -56,6 +56,8 @@ body {
 }
 ```
 
+Notice how we imported the `App.css` file in `App.js` as though it were a JavaScript module. This works due to [Webpack](https://webpack.js.org/), a package React uses behind the scenes to bundle dependencies into a single module.
+
 Let's use this component to view some content on our browser.
 
 Create a new file `index.js` in the `src` folder and add the following code
