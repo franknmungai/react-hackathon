@@ -173,8 +173,7 @@ Our reducer function is called and it receives this action and updates our _stat
 
 To highlight our cells based on whether they are candidate moves, we need to get the current array of `possibleMoves` from our state. We can do that in the `Cell` component by using the `useContext` hook and providing our `GameContext`.
 
-```java {12-13}
-// src/components/Cell/index.jsx
+```java {12-13} title="/src/components/Cell/index.jsx"
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import './cell-styles.css';
@@ -211,8 +210,7 @@ We get the `possibleMoves` from state and then check if this Cell's position is 
 
 In our return statement, we wrap our `Piece` in a _div_ with a className `overlay`, we also apply the className `possible-move` conditionally if this cell is a possible move. That className adds a linear gradient to our cell to highlight it. See the modified css below
 
-```css
-/* src/components/cell/cell-styles.css */
+```css title="/src/components/cell/cell-styles.css"
 .cell {
 	width: calc((100vh * 0.9) / 9.6);
 	height: calc((100vh * 0.85) / 9.4);
