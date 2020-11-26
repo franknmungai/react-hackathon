@@ -18,7 +18,7 @@ To highlight valid cells for a move, we can follow the same approach by creating
 While this approach will work, as we add more features and state values to our game, we will also have to pass in more props down to our components.
 To avoid this, we will use another state management solution by React called the Context API. It allows us to share state values between components without having to pass them around through _props_. This will help us manage more values in state such as candidate cells, game over status, captured pieces and more, without passing in more _props_ to our _Board_, _Cell_ and _Piece_ components.
 
-To get started let's create a new folder in `src` and name it `context`. In the context folder, create a new file `GameContext.js`.
+To get started create a new folder in `src` and name it `context`. In the context folder, create a new file `GameContext.js`.
 
 ```
 ├───assets
@@ -27,16 +27,15 @@ To get started let's create a new folder in `src` and name it `context`. In the 
 │   ├───board
 │   ├───cell
 │   └───piece
-├───context
+├───context --> create this
 ├───functions
 └───pages
     └───Game
 ```
 
-In `GameContext.js`, let's add the following
+In `GameContext.js`, add the following
 
-```js
-// src/context/GameContext.js
+```js title="/src/context/GameContext.js"
 import React, { createContext, useReducer } from 'react';
 import GameReducer from './GameReducer';
 
@@ -57,24 +56,23 @@ export const GameProvider = ({ children }) => {
 };
 ```
 
-We create a new context object using `createContext()`, and provide an initial state value, which is our object with `possibleMoves: []`. Next, we create a `GameProvider` component, it takes a special _prop_ called `children`. The `children` _prop_ refers to the child nodes or content passed to this component within it's tags. See the short example below
+We create a new context object using `createContext()`, and provide an initial state value, which is our object with `possibleMoves: []`. Next, we create a `GameProvider` component, it takes a special _prop_ called `children`. The `children` _prop_ refers to the child nodes or content passed to this component within its tags. See the short example below
 
-```java
+```ts
 const SomeComponent ({children}) => <p>{children}</p>; //Hello world
 <SomeComponent>
     Hello world
 </SomeComponent>
 ```
 
-Next we use the `useReducer` hook. It's an alternative to `useState`. It makes it easier to manage and update complex or deeply nested states. It takes in a reducer function, which is a function that updates the state, and the initial state value, `initialState`. It also returns an array with two values. The first value is the `state` and the second value is a function called `dispatch` that is used to trigger state updates. Whenever we call `dispatch`, the reducer function we passed in i.e `GameReducer` is going to be called to update the state.
+Next we use the `useReducer` hook. It's an alternative to `useState`. It makes it easier to manage and update complex or deeply nested state values. It takes in a reducer function, which is a function that updates the state, and the initial state value, `initialState`. It also returns an array with two values. The first value is the `state` and the second value is a function called `dispatch` that is used to trigger state updates. Whenever we call `dispatch`, the reducer function we passed in i.e `GameReducer` is going to be called to update the state.
 
-Finanlly we return the `children` wrapped in `GameContext.Provider`. `GameContext.Provider` takes a `value` _prop_ where we pass the state and any values we want to share with all the components in this tree.
-For the `value` _prop_, we provide an object with all the properties in our `state`, which in this case is only the `possibleMoves` array, we also provide dispatch so that we can easiliy trigger state updates from nested children components.
+Finally we return the `children` wrapped in `GameContext.Provider`. `GameContext.Provider` takes a `value` _prop_ where we pass the state and any values we want to share with all the components in this tree.
+For the `value` _prop_, we provide an object with all the properties in our `state`, which in this case is only the `possibleMoves` array, we also provide dispatch so that we can easily trigger state updates from nested children components.
 
 That's it for the _context_ set up. Let's create our `GameReducer` function in `src/context/GameReducer.js`.
 
-```js
-//src/context/GameReducer.js
+```js title="/src/context/GameReducer.js"
 import { types } from './actions';
 
 const getPositions = (moves) => {
@@ -106,7 +104,7 @@ export default GameReducer;
 
 ## Reducers
 
-A reducer is a function that updates our state. It takes in the original _state_ value as its first argument and an `action` as its second, and based on the type of this action, it returns a new updated state.
+A reducer is a function that updates our state. It takes in the previous _state_ value as its first argument and an `action` as its second, and based on the type of this action, it returns a new updated state.
 This actions are usually _dispatched_ from our components as we will see in a moment.
 
 We use a `switch` statement to check the action type and handle different cases. If the type of action dispatched is `types.SET_POSSIBLE_MOVES` we return a new object and update the `possibleMoves` property to what is returned from `getPositions(action.moves)`. When this action is _dispatched_ from our `Game` component, the reducer will receive a property from the action called `moves`, it will be an array of the possible moves that need to be set e.g `[a3, a4]`. This `moves` array can include the actual pieces e.g `['Na3', 'Nc3', 'Nf3', 'Nh3']`. That's why we use the `getPositions` function to extract the cell information and pass this value to our `possibleMoves` property.
