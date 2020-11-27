@@ -31,7 +31,7 @@ In chess, there are four scenarios that would lead to a game being considered ov
    - When the next player in turn is not in _check_ but has no legal move they can make
 
    ```java
-   //Returns true or false if the side to move has been stalemated.
+   //Returns true if the side to move has been stalemated otherwise false.
    chess.in_stalemate()
    ```
 
@@ -40,7 +40,8 @@ In chess, there are four scenarios that would lead to a game being considered ov
    - A player may claim a draw if the same position occurs three times on their turn because such a game might go on indefinitely.
 
    ```java
-   //Returns true or false if the current board position has occurred three or more times.
+   //Returns true if the current board position has occurred three or more times.
+   //Otherwise false
    chess.in_threefold_repetition()
    ```
 
@@ -59,13 +60,15 @@ In chess, there are four scenarios that would lead to a game being considered ov
      We only have a winner if the game ends in _checkmate_.
 
    ```java
-   //Returns true or false if the game is drawn
+   //Returns true if the game is drawn
    chess.in_draw()
    ```
 
 ## `getGameOverState` function
 
-To get started, let's create a function `getGameOverState` in `src/functions/game-over.js` that checks through this cases.
+To get started, let's create a function `getGameOverState` that checks through this cases to determine when the game is over, and the status.
+
+Create a new file `game-over.js` in `src/functions/` and add this code.
 
 ```java title="src/functions/game-over.js"
 /**
@@ -73,7 +76,7 @@ To get started, let's create a function `getGameOverState` in `src/functions/gam
  * @param {*} chess An instance of the current Chess object
  * @returns {[boolean, string]}
  */
-const getGameOverState = (chess) => {
+export const getGameOverState = (chess) => {
 	if (!chess.game_over()) {
 		return [false, ''];
 	}
@@ -91,20 +94,25 @@ const getGameOverState = (chess) => {
 		return [true, 'draw'];
 	}
 };
-
-export default getGameOverState;
 ```
 
-The `getGameOverState` function takes in the chess object and returns an array of two values. The first value is a boolean depending on whether the game is over or not and the second value is the game over _status_ e.g _checkmate_ or _stalemate_
+The `getGameOverState` function takes in the chess object and returns an array of two values. The first value is a boolean showing whether the game is over or not and the second value is the game over _status_ e.g _checkmate_ or _stalemate_
+
+Export this function in `src/functions/index.js` by adding this.
+
+```js title="/src/functions/index.js"
+export * from './game-over';
+```
 
 ## `GAME_OVER` action
 
 Next, we use this function in our `Game` component to determine the game over status.
-We can check for game over status in our `useEffect` call that runs everytime a move is made (the _fen_ is updated).
+We can check for game over status in the `useEffect` call that runs everytime a move is made (the _fen_ is updated).
 Initially we were only dispatching the event `type: types.SET_TURN`, but now, we first get the game over status by calling `getGameOverState(chess)`. It returns the `gameOver` value and the status. If `gameOver` is _true_, we dispatch an action of type `types.GAME_OVER`, we also provide the `status` and the `player` in turn as part of the action.
 
 ```java {3-7} title="src/pages/Game/index.jsx"
 	useEffect(() => {
+		//import from '../../functions'
 		const [gameOver, status] = getGameOverState(chess);
 		if (gameOver) {
 			dispatch({ type: types.GAME_OVER, status, player: chess.turn() });
@@ -134,7 +142,7 @@ We set `gameOver` to true, and set `status` and `turn` to what we receive from `
 
 Let's add the `gameOver` and `status` value as part of our initial state in `src/context/GameContext.js`
 
-```java title="src/context/GameContext.js"
+```java title="src/context/GameContext.js" {5-6}
 const initialState = {
 	possibleMoves: [],
 	turn: 'w', //w or b
@@ -149,7 +157,7 @@ const initialState = {
 Let's create the `GameOver` component which will be rendered when `gameOver` is true.
 We saw a preview of this component at the beginning of this section.
 
-To get started, let's create a new folder in `src/component` and save it as `layout`.
+To get started, create a new folder in `src/components` and save it as `layout`.
 
 ```
 components
@@ -159,7 +167,7 @@ components
 └───piece
 ```
 
-In `/components/layout` create a new file `index.jsx` where we will create a `Layout` component. This component will give us the general layout we will use in the `GameOver` component. it's going to be a resusable component so that we can easily reuse the same layout in our App. Let's also create the stylesheet for this component in `layout/layout-styles.css`;
+In `components/layout` create a new file `index.jsx` where we will create a `Layout` component. This component will give us the general layout we will use in the `GameOver` component. It's going to be a resusable component so that we can easily reuse the same layout in our App. Let's also create the stylesheet for this component in `layout/layout-styles.css`;
 
 ```
 layout
@@ -167,9 +175,9 @@ layout
 └───layout-styles.css
 ```
 
-For the Layout component, let's add the following in `index.jsx`
+For the Layout component, add the following in `index.jsx`
 
-```java title="/src/components/Layout/index.jsx"
+```java title="/src/components/layout/index.jsx"
 
 import React from 'react';
 import './layout-styles.css';
@@ -189,10 +197,10 @@ const Layout = ({ Image, Content }) => {
 export default Layout;
 ```
 
-The `Layout` component take two _props_. These props will be components. The first prop is `Image` to show the `<Image/>` and the second prop is `Content` for the <Content/>. The Layout component aligns the `Image` and `Content` components we receive in props as shown in the preview.
+The `Layout` component takes two _props_. These props will be components. The first prop is `Image` to show the image on the left and the second prop is `Content` for the content of the component. The Layout component aligns the `Image` and `Content` components we receive in props as shown in the preview.
 The styling is applied through `layout-styles.css`. To keep this section short, we decided to share the CSS through a GitHub gist, you can find it [here](https://gist.github.com/franknmungai/10cd5af0cb7e5247f935edbd2bc816af) and add it to your own `layout-styles.css` file.
 
-We make use of some external fonts in the `layout-styles.css`. To make them available, include the following tag in `public/index.html` within the `head` tag.
+We make use of some external fonts in `layout-styles.css`. To make them available, include the following tag in `public/index.html` within the `head` tag. Note that public is outside of the `src` folder.
 
 ```html title="public/index.html"
 <link
@@ -204,7 +212,7 @@ We make use of some external fonts in the `layout-styles.css`. To make them avai
 Now let's use this `Layout` component to easily create our `GameOver` component.
 In `src/components`, create a new folder `gameover` and in the folder add two files `index.jsx` and `game-over.styles.css`
 
-```
+```py {4}
 components
 ├───board
 ├───cell
@@ -219,7 +227,7 @@ gameover
 └───gameover-styles.css
 ```
 
-Let's create our `GameOver` component in `gameover/index.jsx` by adding the following
+Let's create our `GameOver` component in `gameover/index.jsx` by adding the following code.
 
 ```jsx title="/src/components/gameover/index.jsx"
 import React, { useContext } from 'react';
@@ -279,7 +287,7 @@ Next we create an Image component that displays the main image we want to have i
 Finally we _return_ the Layout component providing the `Image` and `Content` as _props_.
 To get this images download all the assets used in this project from [here](../static/assets.rar).
 
-To style this let's add some css in `gameover-styles.css`. You can find the css [here](https://gist.github.com/franknmungai/77ecdcf4be99ff4e0a7f7397f4eb58c3)
+To style this let's add some css in `gameover-styles.css`. You can find the css [in this Github gist](https://gist.github.com/franknmungai/77ecdcf4be99ff4e0a7f7397f4eb58c3)
 
 ## Early conditional return
 
@@ -292,7 +300,7 @@ const Game = () => {
     const { dispatch, gameOver } = useContext(GameContext);
     // The rest of the code is the same
     if (gameOver) {
-		return <GameOver />;
+		return <GameOver />; //import GameOver from '../../components/gameover';
 	}
 	return (
 		<div className="game">
@@ -325,7 +333,7 @@ const FEN = 'rnb1kbnr/pppp1ppp/8/4p3/5PPq/8/PPPPP2P/RNBQKBNR w KQkq - 1 3';
 ![img](../static/img/Screenshot9.png)
 
 ```java
-// draw
+// draw/Stalemate
 const FEN = '4k3/4P3/4K3/8/8/8/8/8 b - - 0 78';
 ```
 
