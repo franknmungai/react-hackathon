@@ -16,12 +16,11 @@ Chess.js offers a method we can use to check if the next side to move is in chec
 
 ## Approach
 
-In our `Game` component we can check if the next player is in _check_ after every move made. Then we will dispatch an action to our reducer which updates a property in our `GameContext` state called `check`. We will then use this property in our `Cell` component to see if the current player is in _check_ in order to change some styling in the cell to give the player a hint.
+In the `Game` component we can check if the next player is in _check_ after every move made. We will then dispatch an action to the reducer which updates a property in the `GameContext` state called `check`. We can then use this property in the `Cell` component to see if the current player is in _check_ in order to change some styling in the cell to give the player a hint.
 
-Let's get started with this flow. Inside our `Game` component in `src/Pages/Game/index.jsx` add the following `useEffect`. The rest of the code remains unchanged.
+Let's get started on this steps. Inside the `Game` component in `src/Pages/Game/index.jsx` add the following `useEffect`. The rest of the code remains unchanged.
 
-```java
-// src/Pages/Game/index.jsx
+```java title="/src/Pages/Game/index.jsx"
 useEffect(() => {
     dispatch({
         type: types.SET_TURN, //import types from '../../context/actions'
@@ -33,30 +32,30 @@ useEffect(() => {
 
 ## useEffect dependencies
 
-Be sure to add this `useEffect` call inside the `Game` component body. `useEffect` here runs everytime the values in our `dependencies` array changes. We have three values in our dependencies array provided to `useEffect`. These are `[fen, dispatch, chess]`. The first value `fen` makes sure that this effect runs everytime our `fen` changes, which happens to be after every move, because we update our `fen` in the `makeMove` function by calling `setFen(...)`. Our other 2 values in the array are `dispatch` and `chess`. These will not actually change in our component lifecyle but it is recommended to include any externally declared variables used in our `useEffect` as part of our dependencies array.
+Be sure to add this `useEffect` call inside the `Game` component body. `useEffect` here runs everytime the values in our _dependencies_ array changes. We have three values in our dependencies array provided to `useEffect`. These are `[fen, dispatch, chess]`. The first value `fen` makes sure that this effect runs everytime our `fen` changes, which happens to be after every move, because we update the `fen` in the `makeMove` function by calling `setFen(...)`. Our other 2 values in the array are `dispatch` and `chess`. These will not actually change in the component's lifecyle but it is recommended to include any externally declared variables used in `useEffect` as part of the dependencies array.
 
-Inside our `useEffect`, we `dispatch` an action of type `types.SET_TURN` and also provide two values as part of the action. These are `player` and `check`. Actions (Objects passed to `dispatch`) must have a type property, this is required, and we can also pass in any other properties we might need in the reducer to update the state (this is optional). We use ` chess.turn()` to get the player who is in turn, this can either be `b`(black) or `w`(white). It is very crucial that we keep track of the turns in order to know whose turn it is when `chess.in_check()` is true, and give them a hint.
+Inside the `useEffect`, we `dispatch` an action of type `types.SET_TURN` and also provide two values as part of the action. These are `player` and `check`. Actions (Objects passed to `dispatch`) must have a type property, this is required, and we can also pass in any other properties we might need in the reducer to update the state (this is optional). We use ` chess.turn()` to get the player who is in turn, this can either be `b`(black) or `w`(white). It is very crucial that we keep track of the turns in order to know whose turn it is when `chess.in_check()` is true, and give them a hint.
 
-That's all for the `Game` component. View the current source code for the `Game` component [here](https://gist.github.com/franknmungai/2fe4c9024cada721482b800078864f86)
+That's all for the `Game` component. View the current code snippet for the `Game` component [here](https://gist.github.com/franknmungai/2fe4c9024cada721482b800078864f86)
 
 ## Updating the reducer
 
-Next, we need to update our reducer function `GameReducer` to update the state for this new action `types.SET_TURN`
-In `src/context/GameReducer.js` let's add the following case in our _switch_ statement. The rest of the code remains the same :)
+Next, we need to update the reducer function `GameReducer` to update the state for this new action `types.SET_TURN`.
 
-```js
-// src/context/GameReducer.js
+In `src/context/GameReducer.js` add the following _case_ in the _switch_ statement. The rest of the code remains the same :)
+
+```js title="/src/context/GameReducer.js"
 case types.SET_TURN:
   return { ...state, turn: action.player, check: action.check };
 ```
 
-We return a new state by copying/spreading the previous state `...state` and setting the `turn` and `check` properties to what we received in our action.
+We return a new state by copying/spreading the previous state `...state` and setting the `turn` and `check` properties to what we received from the action.
 
 ## Updating the actions
 
 Let's also make sure we define the `SET_TURN` action in our actions `src/context/actions.js`.
 
-```java
+```java {4}
 export const types = {
 	SET_POSSIBLE_MOVES: 'SET_POSSIBLE_MOVES',
 	CLEAR_POSSIBLE_MOVES: 'CLEAR_POSSIBLE_MOVES',
@@ -66,8 +65,7 @@ export const types = {
 
 In `GameContext.js` at `src/context/GameContext.js` where we defined the initial state we used to create the _context_, let's add two properties, `turn` and `check`.
 
-```java
-// src/context/GameContext.js
+```java title="/src/context/GameContext.js" {3-4}
 const initialState = {
 	possibleMoves: [],
 	turn: 'w', //w or b. w goes first so its the default
@@ -81,14 +79,13 @@ const initialState = {
 
 Finally let's use add the following to the `Cell` component in `src/components/cell/index.jsx` to complete this feature
 
-```java {14-20}
-// src/components/cell/index.jsx
+```java {11,14-19,30-32} title="/src/components/cell/index.jsx"
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import './cell-styles.css';
 import { isLightSquare, Cell as BoardCell } from '../../functions/';
 import Piece from '../piece';
 import { GameContext } from '../../context/GameContext';
+import './cell-styles.css';
 
 const Cell = ({ cell, index, makeMove, setFromPos }) => {
 	const light = isLightSquare(cell.pos, index);
@@ -135,8 +132,7 @@ In `Cell` component we get the `turn` and `check` properties from our _context_ 
 `useContext()`
 We determine the color of the Piece held by this cell and then use this color in the `inCheck` function to determine if we need to highlight this cell. We only need to highlight the cell holding the king of the player in turn `turn === color && king && check`. If that condition is true, we apply a className `check` in the _div_ that wraps the `Piece`. That className applies a linear gradient to the Cell.
 
-```css
-/* src/components/cell/cell-styles.css */
+```css title="/src/components/cell/cell-styles.css"
 /* The rest of the css remains the same */
 .check {
 	background-image: linear-gradient(
