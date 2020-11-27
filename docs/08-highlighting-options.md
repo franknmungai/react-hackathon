@@ -20,14 +20,15 @@ To avoid this, we will use another state management solution by React called the
 
 To get started create a new folder in `src` and name it `context`. In the context folder, create a new file `GameContext.js`.
 
-```
+```py {7-8}
 ├───assets
 │   └───pieces
 ├───components
 │   ├───board
 │   ├───cell
 │   └───piece
-├───context --> create this
+├───context
+│   └───GameContext.js
 ├───functions
 └───pages
     └───Game
@@ -67,10 +68,10 @@ const SomeComponent ({children}) => <p>{children}</p>; //Hello world
 
 Next we use the `useReducer` hook. It's an alternative to `useState`. It makes it easier to manage and update complex or deeply nested state values. It takes in a reducer function, which is a function that updates the state, and the initial state value, `initialState`. It also returns an array with two values. The first value is the `state` and the second value is a function called `dispatch` that is used to trigger state updates. Whenever we call `dispatch`, the reducer function we passed in i.e `GameReducer` is going to be called to update the state.
 
-Finally we return the `children` wrapped in `GameContext.Provider`. `GameContext.Provider` takes a `value` _prop_ where we pass the state and any values we want to share with all the components in this tree.
+Finally, we return the `children` wrapped in `GameContext.Provider`. `GameContext.Provider` takes a `value` _prop_ where we pass the values we want to share with all the components in this tree.
 For the `value` _prop_, we provide an object with all the properties in our `state`, which in this case is only the `possibleMoves` array, we also provide dispatch so that we can easily trigger state updates from nested children components.
 
-That's it for the _context_ set up. Let's create our `GameReducer` function in `src/context/GameReducer.js`.
+That's it for the _context_ set up. Let's create our `GameReducer` function in `src/context/GameReducer.js`. Create the `GameReducer.js` file in the `context` folder and add the following code.
 
 ```js title="/src/context/GameReducer.js"
 import { types } from './actions';
@@ -107,11 +108,13 @@ export default GameReducer;
 A reducer is a function that updates our state. It takes in the previous _state_ value as its first argument and an `action` as its second, and based on the type of this action, it returns a new updated state.
 This actions are usually _dispatched_ from our components as we will see in a moment.
 
-We use a `switch` statement to check the action type and handle different cases. If the type of action dispatched is `types.SET_POSSIBLE_MOVES` we return a new object and update the `possibleMoves` property to what is returned from `getPositions(action.moves)`. When this action is _dispatched_ from our `Game` component, the reducer will receive a property from the action called `moves`, it will be an array of the possible moves that need to be set e.g `[a3, a4]`. This `moves` array can include the actual pieces e.g `['Na3', 'Nc3', 'Nf3', 'Nh3']`. That's why we use the `getPositions` function to extract the cell information and pass this value to our `possibleMoves` property.
+We use a `switch` statement to check the action type and handle different cases. If the type of action dispatched is `types.SET_POSSIBLE_MOVES` we return a new object and update the `possibleMoves` property to what is returned from `getPositions(action.moves)`. When this action is _dispatched_ from our `Game` component, the reducer will receive a property from the action called `moves`, it will be an array of the possible moves that need to be set e.g `[a3, a4]`. The items in the array are the cells that a piece can move to e.g _a3_, however some items can also include the piece as well as the cell e.g `['Na3', 'Nc3', 'Nf3', 'Nh3']`. That's why we use the `getPositions` function to extract the cells and pass this value to our `possibleMoves` property.
 
 ```java
 let moves = ['Na3', 'Nc3', 'Nf3', 'Nh3'];
-getPositions(moves); //["a3", "c3", "f3", "h3"]
+getPositions(moves); // ["a3", "c3", "f3", "h3"]
+// We remove the leading 'N's which represents the pieces (knight),
+//we only need to know the cell positions
 ```
 
 When the type of action dispatched is `types.CLEAR_POSSIBLE_MOVES`, we update our state by returning a new object and setting the `possibleMoves` property to `[]`. We will _dispatch_ this action after the player finally makes a move and we now need to unhighlight any highlighted cells.
@@ -122,22 +125,39 @@ Let's create a file for this actions in `src/context/actions.js`. Actions are ju
 
 Let's add the following actions for now
 
-```java
+```java title="/src/context/actions.js"
 export const types = {
 	SET_POSSIBLE_MOVES: 'SET_POSSIBLE_MOVES',
 	CLEAR_POSSIBLE_MOVES: 'CLEAR_POSSIBLE_MOVES',
 };
-``
 ```
 
 ## useContext
 
-Now let's make use of our context in our components to complete this feature.
+Now let's make use of the context values in our components. In order to share context values between components, we need to wrap the components in a _Provider_ component, in our case `GameContext.Provider`.
 
-In the `Game` component we need to make the following additions. The rest of the code remains unchanged :)
+So let's wrap the main `App` component in `src/App.js` using the `GameContext.Provider` component we created earlier. This makes the values we passed in the `value` _prop_ of the Provider component accessible by its child components as we shall see in a moment.
 
-```java
-// src/pages/Game.jsx
+```java title="/src/App.js" {3,8-10}
+import React from 'react';
+import Game from './pages/Game';
+import { GameProvider } from './context/GameContext';
+import './App.css';
+
+function App() {
+	return (
+		<GameProvider>
+			<Game />
+		</GameProvider>
+	);
+}
+
+export default App;
+```
+
+In the `Game` component we need to make the following additions. The rest of the code remains unchanged, only add the new parts :)
+
+```java title="/src/pages/Game.jsx" {1,2,3,6,11,16-19}
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { types } from '../../context/actions';
@@ -145,26 +165,25 @@ import { types } from '../../context/actions';
 // inside the Game component.
 const { dispatch } = useContext(GameContext);
 const makeMove = (pos) => {
-		const from = fromPos.current;
-		const to = pos;
-		chess.move({ from, to });
-		dispatch({ type: types.CLEAR_POSSIBLE_MOVES });
-		setFen(chess.fen());
+	const from = fromPos.current;
+	const to = pos;
+	chess.move({ from, to });
+	dispatch({ type: types.CLEAR_POSSIBLE_MOVES });
+	setFen(chess.fen());
 };
-
-	const setFromPos = (pos) => {
-		fromPos.current = pos;
-		dispatch({
-			type: types.SET_POSSIBLE_MOVES,
-			moves: chess.moves({ square: pos }),
-		});
-	};
+const setFromPos = (pos) => {
+	fromPos.current = pos;
+	dispatch({
+		type: types.SET_POSSIBLE_MOVES,
+		moves: chess.moves({ square: pos }),
+	});
+};
 ```
 
 First, we import the `useContext` hook from React. `useContext` takes in a _context_ value created using `React.createContext` like our `GameContext`.
 `useContext` gives us access to the _state_ values we provided in our context provider i.e `GameContext.Provider` such as `dispatch`.
 
-In the `setFromPos`, which is called once a Piece is dragged (`onDragStart`), we make use of the `dispatch` function to _dispatch_ an event of type
+In the `setFromPos`, which is called once a Piece is dragged (_onDragStart_), we make use of the `dispatch` function to _dispatch_ an event of type
 `types.SET_POSSIBLE_MOVES`, we also provide a `moves` property whose value we get from calling
 `chess.moves({ square: pos })` which returns a list of possible moves. Our `GameReducer` is called and it updates our `setPossibleMoves` array with the `action.moves` dispatched. Any the object we provide to `dispatch({})` is received by our reducer as the value of `action`
 
@@ -173,13 +192,13 @@ Our reducer function is called and it receives this action and updates our _stat
 
 To highlight our cells based on whether they are candidate moves, we need to get the current array of `possibleMoves` from our state. We can do that in the `Cell` component by using the `useContext` hook and providing our `GameContext`.
 
-```java {12-13} title="/src/components/Cell/index.jsx"
+```java {1,5,11-12,22} title="/src/components/cell/index.jsx"
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import './cell-styles.css';
 import { isLightSquare, Cell as BoardCell } from '../../functions/';
 import Piece from '../piece';
 import { GameContext } from '../../context/GameContext';
+import './cell-styles.css';
 
 const Cell = ({ cell, index, makeMove, setFromPos }) => {
 	const light = isLightSquare(cell.pos, index);

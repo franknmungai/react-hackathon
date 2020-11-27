@@ -12,10 +12,11 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_mountain.svg',
 		description: (
 			<>
-				In this tutorial, we will be creating a multiplayer chess game. Players will be able to create games, invite opponents and play online.
+				In this tutorial, we will be creating a multiplayer chess game. Players
+				will be able to create games, invite opponents and play online.
 				<h4>
 					View the finished application{' '}
-					<a href="https://stack-chess-tutorial.netlify.app/" target="_blank">
+					<a href="https://stack-chess.netlify.app/" target="_blank">
 						here
 					</a>
 				</h4>
@@ -39,11 +40,12 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_react.svg',
 		description: (
 			<>
-				By the end of this tutorial, you will be familiar with the basics of React such
-				as components, props and state, hooks such as <code>useState</code>{' '}
-				<code>useEffect</code> <code>useRef</code> <code>useReducer</code>,
-				creating layouts with CSS Grid, creating real-time apps with {' '}
-				<code>socket.io</code> and so much more. Let's get started.
+				By the end of this tutorial, you will be familiar with the basics of
+				React such as components, props and state, hooks such as{' '}
+				<code>useState</code> <code>useEffect</code> <code>useRef</code>{' '}
+				<code>useReducer</code>, creating layouts with CSS Grid, creating
+				real-time apps with <code>socket.io</code> and so much more. Let's get
+				started.
 			</>
 		),
 	},
