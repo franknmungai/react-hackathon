@@ -5,8 +5,8 @@ sidebar_label: Socket.io Client
 slug: /11-socket.io-client
 ---
 
-In the previous section, we created a webserver that uses web sockets for real-time communication.
-We will now use this Webserver to communicate between players by emitting and listening for events.
+In the previous section, we created a web server that uses web sockets for real-time communication.
+We will now use this web server to communicate between players by emitting and listening for events.
 
 Let's first install the socket.io-client library into our chess-client project by running
 
@@ -14,18 +14,18 @@ Let's first install the socket.io-client library into our chess-client project b
 npm i socket.io-client
 ```
 
-Make sure you run this command in the chess-client directory root.
+Make sure you run this command in the chess-client root directory.
 
 ## Creating a socket and listening for events
 
 In the _Game_ component, let's import _socket-io-client_ and create a _socket_
 
-```js
+```js title="src/pages/Game/index.jsx"
 import io from 'socket.io-client';
 const socket = io('localhost:5000');
 ```
 
-We our socket is connected to `localhost:5000`, where our Chess server is running.
+We create a socket by calling `io` and providing the url on which the server is running, which in this case is `localhost:5000`
 
 In our `Game` component, let's add a `useEffect` hook from where we can _listen_ for all events coming from our server. `useEffect` is great for setting up such listeners.
 
@@ -54,7 +54,7 @@ useEffect(() => {
 First, we emit a _join_ event providing our `name` and `gameID`, these are hard-coded but we will make them dynamic in the next section. The server adds us to the game and responds through the callback where we receive the `color` assigned to us. In case of an error, we also receive the error which we will handle later.
 
 Next, we listen for the _welcome_ event from the server, we receive a `message` and `opponent`.
-We also listen for the _opponentMove_ event, we receive the `to` and `from` cell positions, and use this to make a move `chess.move()` and to update our `fen`. This updates our board to reflect our opponent's move
+We also listen for the _opponentMove_ event where we receive the `to` and `from` cell positions, and use this to make a move using `chess.move()` and to update our `fen`. This updates our board to reflect our opponent's move
 
 We also listen for the _message_ event. We will handle this events later.
 
@@ -62,7 +62,7 @@ We also listen for the _message_ event. We will handle this events later.
 
 In our `makeMove` function, we added `socket.emit` to emit a _move_ event, providing a `gameID` and the `from` and `to` cell positions. This will be broadcasted by our server to the other player in the `opponentMove` event.
 
-```jsx title="src/pages/Game/index.jsx"
+```jsx title="src/pages/Game/index.jsx" {6}
 const makeMove = (pos) => {
 	const from = fromPos.current;
 	chess.move({ from, to: pos });
@@ -72,13 +72,13 @@ const makeMove = (pos) => {
 };
 ```
 
-That's all we need to connect and communicate between two players through a web-server. Find the code snippet for the `Game` component in [this gist](https://gist.github.com/franknmungai/9f0906536381a10db9ee4ff6bbb7e44e).
+That's all we need to connect and communicate between two players through a web server. Find the code snippet for the `Game` component in [this gist](https://gist.github.com/franknmungai/9f0906536381a10db9ee4ff6bbb7e44e).
 
 The code for the project upto this section can be found in [this branch](https://github.com/franknmungai/live-chess/tree/10-socket-io-client)
 
 To test this out, make sure the server is running on `localhost:5000` and open the react app in two different tabs or windows.
 
-Open the browser console `Ctrl+Shift+i` and see the logs, should be something like this. These are from the events we receive.
+Open the browser console `Ctrl+Shift+i` and check out the logs. These are from the events we receive. They should be something like this.
 
 ```
 {color: "w"}
