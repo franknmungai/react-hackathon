@@ -132,7 +132,7 @@ hr {
 }
 ```
 
-## Resusable components
+## Reusable components
 
 We also make use of `ShareButtons` component which shows some social media icons we can click on to share the link for this game.
 

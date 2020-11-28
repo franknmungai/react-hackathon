@@ -283,7 +283,7 @@ To test this out, add two players in the same Game and here's what we should hav
 We would like to show some messages to the player on certain events e.g the welcome message we receive from the server when a user joins the game, alert them when their opponent joins the game, alert them when its their turn to make a move and anytime we receive the `message` event from the webserver.
 We will display messages within a [Snackbar](https://bit.dev/mui-org/material-ui/snackbar/) component. A snackbar is a small non-distractive dialog mostly at the bottom of the screen.
 
-Let's install s snackbar from [bit.dev] which is a registry of components for both React and other frameworks.
+Let's install a snackbar from [bit.dev](https://bit.dev/) which is a registry of components for both React and other frameworks.
 
 ```
 npm i @bit/mui-org.material-ui.snackbar
