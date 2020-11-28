@@ -24,11 +24,27 @@ Open your terminal, navigate to the `chess-server` folder and run
 npm init -y
 ```
 
-This initialized a new _npm_ project and created a `package.json` file to manage our dependencies. Let's install the packages we need. We need [express.js](https://expressjs.com/) for creating a web server and [socket.io](https://socket.io/) to easily make use of Websockets for instant messaging.
+This initialized a new _npm_ project and created a `package.json` file to manage our dependencies. Let's install the packages we need. We need [express.js](https://expressjs.com/) for creating a web server and [socket.io](https://socket.io/) to easily make use of web sockets for instant messaging.
+
+Install this dependencies by running:
+
+```
+npm i express
+```
+
+```
+npm i socket.io
+```
+
+```
+npm i cors
+```
+
+The cors package helps us connect to our server from our client and allow cross origin resource sharing. [Learn more](https://www.codecademy.com/articles/what-is-cors)
 
 ## Server scaffold
 
-In `chess-server`, create a new folder `src`. In `/chess-server/src` create two files, `index.js`
+In `chess-server`, create a new folder `src`. In `chess-server/src` create two files, `index.js`
 and `game.js`
 
 ```
@@ -49,20 +65,24 @@ Let's create our server in `index.js` by adding this code.
 const http = require('http');
 const socketio = require('socket.io');
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
 const PORT = 5000;
 const io = socketio(server);
 
+app.use(cors());
 server.listen(PORT, () => console.log('Server running on port ' + PORT));
 ```
 
-To import packages in _node_, we use the `require` function. First, we _require_ `http`, `socketio` and `express`. `http` is a builtin _node_ package that we can use alongside _express_ to create a web server.
+To import packages in _Node_, we use the `require` function. First, we _require_ `http`, `socketio` and `express`. `http` is a builtin _Node_ package that we can use alongside _express_ to create a web server.
 
-We create a new `app` by calling `express` then we create our webserver, `server` by calling `http.createServer` and passing in our express `app`. We define a `PORT` from where the server will be running . Next we create an `io` object by calling `socketio` and providing our server object. `io` is used to listen for connections and to emit events to connected users.
+We create a new `app` by calling `express` and then create the web server, `server` by calling `http.createServer` and passing in our express instance `app`. We define the port `PORT` where the server will be running on. Next we create an `io` object by calling `socketio` and providing our server instance. `io` is used to listen for connections and to emit events to connected users.
 
-Finally we set up the `server` to listen on `PORT`. Through that port, we can listen for incoming events.
+We also call `app.use(cors())` to add the [cors](https://github.com/expressjs/cors) middleware to our express server, to allow cross origin resource sharing with our client.
+
+Finally we set up the server `server` to listen on port `PORT`. Through that port, we can listen for incoming events.
 
 To run the server, open the `package.json` and add the following in the `scripts: {}` section
 
@@ -72,16 +92,16 @@ To run the server, open the `package.json` and add the following in the `scripts
 },
 ```
 
-This creates a command we can us to start our server. In your terminal, navigate to the folder for this project and run `npm start`. This starts our server on `localhost:5000`. You should see this message printed in your terminal once the server starts
+This creates a command we can use to start our server. In your terminal, navigate to the folder for this project and run `npm start`. This starts our server on `localhost:5000`. You should see this message printed in your terminal once the server starts
 
 ```
 Server running on port 5000
 ```
 
-## Managing our games
+## Managing the games
 
 Before we start working on real-time messaging, let's first create some functions to manage our players and games in `src/game.js`.
-All of our games will be stored in an object where the key is the id of the game `gameID` and the value is an array of the two players in that game. Each game(key) will have only two players connected. We can also have multiple games happening concurrently.
+All of our games will be stored in an object where the key is the _id_ of the game `gameID` and the value is an array of the two players in that game. Each game(key) will have only two players connected. We can also have multiple games happening concurrently.
 
 Example
 
@@ -143,13 +163,15 @@ const addPlayer = ({ gameID, name, playerID }) => {
 
 The `addPlayer` function receives an object with the `name`, `playerID` and `gameID`. To add a player, we first check to see if the game they are trying to join exists or has been created
 `games[gameID]`, if not we create this new player providing the required parameters and a randomly assigned color.
+
 `new Player(name, color, playerID, gameID)`
+
 We then create this game and add the player in our array of players. `games[gameID] = [player]`.
-We _return_ an object with a `message`, an `opponent` of _null_, since they are the first to join and we don't have any opponent yet and the `player` we just created.
+We _return_ an object with a `message`, an `opponent` of _null_, since they are the first to join and we don't have any opponent yet, and the `player` we just created.
 
-Next, we check to see if the game already has 2 players. If that is true, we return an object with an error `property`.
+Next, we check to see if the game already has 2 players. If that is true, we return an object with an `error` property.
 
-The last part of this function executes when this game has already been created but the game is not full, i.e when we are adding a second player. For this, we get first player `games[gameID][0]` who is the _opponent_. Then we create a new player and add that to the array of players. `games[gameID].push(player)` we _return_ an object with the _message_, `opponent` and `player` created.
+The last part of this function executes when this game has already been created but the game is not full, i.e when we are adding a second player. For this, we get first player `games[gameID][0]` who is the _opponent_. We create a new player and add that to the array of players. `games[gameID].push(player)` we _return_ an object with three properties `message`, `opponent` and the `player` created.
 
 Next we create a function to access a game by it's `id` from our games.
 
@@ -157,7 +179,7 @@ Next we create a function to access a game by it's `id` from our games.
 const game = (id) => games[id];
 ```
 
-Let's create a another function to remove a player in case a player leaves the game. This function also returns the player who left the game
+Let's create another function to remove a player in case a player leaves the game. This function also returns the player who left the game
 
 ```js title="/chess-server/src/game.js"
 const removePlayer = (playerID) => {
@@ -182,11 +204,11 @@ module.exports = {
 };
 ```
 
-Find the complete code snippet for `src/game.js` in [this](https://gist.github.com/franknmungai/f830e4fa946178f0e447bcde1c8c279c) Gist.
+Find the complete code snippet for `src/game.js` in [this Github gist](https://gist.github.com/franknmungai/f830e4fa946178f0e447bcde1c8c279c).
 
 ## Socket events
 
-In our `index.js` file, let's set up our Websockets connection
+In our `index.js` file, let's set up our web sockets connection
 
 ```js title="src/index.js"
 io.on('connection', (socket) => {
@@ -243,7 +265,7 @@ We first listen for new connections `io.on('connection')`. For every connection 
 
 We also add this player to the game `socket.join(gameID)`. (In _socket.io_ terms, it's called a _room_)
 
-We emit a `welcome` event to this socket/connection through `socket.emit()` and provide a `message` and the `opponent` for this player. The opponent might be _null_ of this socket is the first player.
+We emit a `welcome` event to this socket/connection through `socket.emit()` and provide a `message` and the `opponent` for this player. The opponent might be _null_ if this socket is the first player.
 
 Next, we emit the `opponentJoin` event to the other player in the game, `socket.broadcast.to(player.gameID)` (in case one had joined before), and send them their opponent data.
 `socket.broadcast` sends an event to the other connected sockets/clients in the same game/room.
