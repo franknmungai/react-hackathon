@@ -11,7 +11,7 @@ In this section, we will create a Home page that displays a form to allow users 
 
 In `src/pages` create a new folder `Home` and add two files, `index.jsx` and `home-styles.css`
 
-```
+```{1}
 pages
 ├───Home
 └───Game
@@ -25,7 +25,7 @@ Home
 
 ## Home page
 
-In `pages/Home/index.jsx` add the following
+In `pages/Home/index.jsx` add the following code for the Home page
 
 ```jsx title="/src/pages/Home/index.jsx"
 import React, { useState, useEffect } from 'react';
@@ -48,24 +48,27 @@ const Form = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<input
-				type="text"
-				className="input"
-				value={name}
-				onChange={({ target }) => setName(target.value)}
-				placeholder="Display Name"
-			/>
-			<div className="gameId">Game ID: {gameID}</div>
-			<hr />
-			<p className="invite">Invite your friend over</p>
-			<ShareButtons
-				shareText={`Join me for a game of Chess at https://stack-chess.netlify.app?id=${gameID}`}
-				subject="Join me for a game of Chess"
-			/>
+		<div>
+			<h2>Play Chess with your friends online</h2>
+			<form onSubmit={handleSubmit}>
+				<input
+					type="text"
+					className="input"
+					value={name}
+					onChange={({ target }) => setName(target.value)}
+					placeholder="Display Name"
+				/>
+				<div className="gameId">Game ID: {gameID}</div>
+				<hr />
+				<p className="invite">Invite your friend over</p>
+				<ShareButtons
+					shareText={`https://stack-chess.netlify.app?id=${gameID}`}
+					subject="Join me for a game of Chess on Stack Chess"
+				/>
 
-			<Button>Create</Button>
-		</form>
+				<Button>Create</Button>
+			</form>
+		</div>
 	);
 };
 const Home = () => {
@@ -79,7 +82,8 @@ export default Home;
 ```
 
 We create a `Form` component with `name` and `gameID` as state values. We create and set a random `gameID` when this component is mounted on `useEffect`.
-The `<input/>` is controlled i.e it's value comes from the `name` state and we update the `name` state on every change. This helps us get the value of the input from our state and is a good way to manage form input elements.
+The `<input/>` is controlled i.e it's value comes from the `name` _state_ and we update the `name` _state_ on every change. This helps us get the value of the input from our _state_ and is a good way to manage form input elements.
+Read more on [controlled components](https://reactjs.org/docs/forms.html)
 
 ```jsx
 <input value={name} onChange={({ target }) => setName(target.value)} />
@@ -89,7 +93,7 @@ In the `Home` component, we return the `Layout` component created earlier, passi
 
 Let's include some styles for the Home page in `pages/Home/home-styles.css`
 
-```css
+```css title="/src/pages/Home/home-styles.css"
 form {
 	width: 80%;
 	height: 100%;
@@ -138,7 +142,7 @@ We also make use of `ShareButtons` component which shows some social media icons
 
 Let's create this component in `src/components/share-buttons` create two files `index.jsx` and `share-buttons-styles.css`
 
-```
+```py {7}
 components
 ├───board
 ├───cell
@@ -204,13 +208,13 @@ const ShareButtons = ({ shareText, subject }) => {
 export default ShareButtons;
 ```
 
-We have a list of `links` each link has a `name` (of the site) and the `url` to share through their API. We use `.map` to convert them into a list of elements `<a/>`. We pass the `shareText` and _subject_ which are received as _props_ to this _links_. The `shareText` is just a message with an invite link to this game
+We have a list of `links`, each link has a `name` ( of the site ) and the `url` to share through their API. We use `.map` to convert them into a list of elements `<a/>`. We pass the `shareText` and `subject` which are received as _props_ to this _links_. The `shareText` is just a message with an invite link to this game
 
 We also `require` an image for each link from our assets folder `../../assets/social/${link.name}.png`
 
 Let's add the styles in `share-buttons/share-buttons.styles.css`
 
-```css title="/src/components/share-buttons/share-buttons.styles.css"
+```css title="/src/components/share-buttons/share-buttons-styles.css"
 .share {
 	display: flex;
 	align-items: center;
@@ -218,10 +222,10 @@ Let's add the styles in `share-buttons/share-buttons.styles.css`
 }
 ```
 
-We also used a `Button` component. This is resusable button extracted from our `GameOver` component.
+We also used a `Button` component. This is a resusable button extracted from our `GameOver` component.
 Let's create this button component in `src/components/button/index.jsx`
 
-```
+```py {2}
 ├───board
 ├───button -> create this
 ├───cell
@@ -243,16 +247,16 @@ import './button-styles.css';
 
 const Button = ({ onClick, children }) => {
 	return (
-		<div onClick={onClick} className="button">
+		<button onClick={onClick} className="button">
 			{children}
-		</div>
+		</button>
 	);
 };
 
 export default Button;
 ```
 
-It recieves the `onClick` event handler as a _prop_ and a `children` _prop_ for the text to show.
+It receives the `onClick` event handler as a _prop_ and a `children` _prop_ for the text to show.
 
 ```css title="/src/components/button/button-styles.css"
 .button {
@@ -268,10 +272,12 @@ It recieves the `onClick` event handler as a _prop_ and a `children` _prop_ for 
 	font-size: 20px;
 	cursor: pointer;
 	font-family: 'Turret Road', cursive;
+	width: 90%;
+	margin-top: 1.5rem;
 }
 ```
 
-We will also resuse this in the `GameOver` component.
+We will also reuse this button in the `GameOver` component.
 
 ## Routing
 
@@ -289,8 +295,8 @@ In `src/App.js` create the routes for our App.
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Game from './pages/Game';
-import { GameProvider } from './context/GameContext';
 import Home from './pages/Home';
+import { GameProvider } from './context/GameContext';
 import './App.css';
 
 function App() {
@@ -308,7 +314,7 @@ export default App;
 ```
 
 We import the `BrowserRouter`component and rename it to `Router`. This should wrap all our routes.
-Next, we imported a `Route` component which we use to specify the component to show for each path in our app.
+Next, we import a `Route` component which we use to specify the component to show for each path in our app.
 For the home path `/` we provide our `Home` component and this will get displayed. We use the `exact` prop to ensure that the path name is an exact match in order to render the `Home` component.
 
 ```jsx
