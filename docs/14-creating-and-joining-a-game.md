@@ -7,11 +7,11 @@ slug: /13-creating-and-joining-a-game
 
 ## Overview
 
-When a player clicks on the `Create` button on the `Home` page, we need to direct them to the `Game` component and forward the name and gameID required by the Game component to create a new Game.
+When a player clicks on the _Create_ button on the `Home` page, we need to direct them to the `Game` component and forward the name and gameID required by the Game component to create a new Game.
 
-Let's handle this in the `onSubmit` function in the `Form` component `src/pages/Home.jsx`.
+Let's handle this in the `onSubmit` function in the `Form` component `src/pages/Home/index.jsx`.
 
-```jsx title="/src/pages/Home.jsx" {1,6,13-19}
+```jsx title="/src/pages/Home/index.jsx" {1,6,13-19}
 import { useHistory } from 'react-router-dom';
 
 const Form = () => {
@@ -58,15 +58,16 @@ const Form = () => {
 };
 ```
 
-At the top of the file we import the `useHistory` hook from `react-router-dom` and use it to create a `history` object `const history = useHistory()`. The `history` object can be used to navigate between pages like we need here.
+At the top of the file we import the `useHistory` hook from `react-router-dom` and use it to create a `history` object `const history = useHistory()`. The `history` object can be used to navigate between pages.
 In the `handleSubmit` function we call `history.push` which navigates to the page we provide as a parameter. `/game?name=${name}&id=${gameID}` we navigate to `/game` and provide 2 query string values `name` and `id` which will be accessed by the `Game` component to create the game.
 
 ## Invited Players
 
 A player is invited to a game through an invite link like this one
-`https://<our-app-url>?id=123456`
-This is our app url with an `id` of the game they've been invited to.
-To handle the case when a player is invited, we need to check if the url already has an `id` query parameter, if true, we use that instead of generating a random one in our `useEffect` in `Form` component.
+`https://<our-app-url>?id=123456`.
+This is our app url with a query string of the _id_ of the game they have been invited to join.
+
+To handle the case when a player is invited, we need to check if the url already has an `id` query string, if true, we use that instead of generating a random one in the `useEffect` in the `Form` component.
 
 To parse query strings and extract values from them, we'll make use of the [query string](https://www.npmjs.com/package/query-string) library
 
@@ -81,7 +82,7 @@ Let's make this changes in our `Form` component
 ```jsx title="/src/pages/Home.jsx"
 const location = useLocation(); //import { useLocation } from 'react-router-dom';
 
-const { id: inviteID } = qs.parse(location.search);
+const { id: inviteID } = qs.parse(location.search); //import qs from 'query-string';
 
 useEffect(() => {
 	if (inviteID) return setGameID(inviteID);
@@ -105,8 +106,11 @@ In the `Game` component, we also need to parse the query string to extract the p
 
 Let's add the following to our Game component, the rest of the code remains unchanged.
 
-```jsx {14-23,30}
+```jsx {10-14,17-26,30,48} title="/src/pages/Game/index.jsx"
 import { useLocation, useHistory } from 'react-router-dom';
+import qs from 'query-string';
+
+// This is within the Game component
 const location = useLocation();
 const history = useHistory();
 const playerName = useRef();
@@ -172,4 +176,4 @@ Add multiple players by opening two tabs and using the same id to join the game.
 
 Get the complete code for the Game component in this [gist](https://gist.github.com/franknmungai/cec7853f34aea2178cc1096fc61103b8)
 
-The code for this secton can be found in [this GitHub branch](https://github.com/franknmungai/live-chess/tree/12-creating-and-joining-a-game)
+The code for this section can be found in [this GitHub branch](https://github.com/franknmungai/live-chess/tree/12-creating-and-joining-a-game)
