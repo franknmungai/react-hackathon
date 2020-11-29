@@ -33,7 +33,7 @@ npm i express
 ```
 
 ```
-npm i socket.io
+npm i socket.io@2.3.0
 ```
 
 ```
@@ -41,6 +41,8 @@ npm i cors
 ```
 
 The cors package helps us connect to our server from our client and allow cross origin resource sharing. [Learn more](https://www.codecademy.com/articles/what-is-cors)
+
+Make sure to install the given version of socket.io `@2.3.0`
 
 ## Server scaffold
 
