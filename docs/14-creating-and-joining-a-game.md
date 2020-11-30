@@ -7,7 +7,7 @@ slug: /13-creating-and-joining-a-game
 
 ## Overview
 
-When a player clicks on the _Create_ button on the `Home` page, we need to direct them to the `Game` component and forward the name and gameID required by the Game component to create a new Game.
+When a player clicks on the _Create_ button in the `Home` page, we need to direct them to the `Game` component and forward the name and gameID required by the Game component to create a new game.
 
 Let's handle this in the `onSubmit` function in the `Form` component `src/pages/Home/index.jsx`.
 
@@ -93,7 +93,7 @@ useEffect(() => {
 
 We import the `useLocation` hook from react-router-dom. It gives us an object that represents the current url.
 `location.search` returns the query strings of the url and we parse that using `qs.parse` to get the id (renamed to `inviteID`).
-In the `useEffect`, if an `inviteID` exists, we set it to our `gameID` state.
+In `useEffect`, if an `inviteID` exists, we set it to our `gameID` state.
 `if (inviteID) return setGameID(inviteID)`
 
 Try entering an _id_ manually e.g `http://localhost:3000/?id=12345648`. This should be displayed in the form as the _id_.
@@ -106,7 +106,7 @@ In the `Game` component, we also need to parse the query string to extract the p
 
 Let's add the following to our Game component, the rest of the code remains unchanged.
 
-```jsx {10-14,17-26,30,48} title="/src/pages/Game/index.jsx"
+```jsx {1-2,10-14,17-26,48} title="/src/pages/Game/index.jsx"
 import { useLocation, useHistory } from 'react-router-dom';
 import qs from 'query-string';
 
