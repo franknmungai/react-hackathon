@@ -28,10 +28,10 @@ const features = [
 		imageUrl: 'img/undraw_docusaurus_tree.svg',
 		description: (
 			<>
-				All you need is an intermdiate understanding of JavaScript. Not familiar
-				with React or socket.io? No worries. All the React and Node.js concepts
-				will be explained along the way, step by step. Everything will be broken
-				down in a clear, easy to grasp way.
+				All you need is an intermediate understanding of JavaScript. Not
+				familiar with React or socket.io? No worries. All the React and Node.js
+				concepts will be explained along the way, step by step. Everything will
+				be broken down in a clear and easy to grasp way.
 			</>
 		),
 	},
@@ -46,6 +46,10 @@ const features = [
 				<code>useReducer</code>, creating layouts with CSS Grid, creating
 				real-time apps with <code>socket.io</code> and so much more. Let's get
 				started.
+				<br />
+				<Link className={clsx(styles.getStarted)} to={'docs/introduction'}>
+					Get Started
+				</Link>
 			</>
 		),
 	},
