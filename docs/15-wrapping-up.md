@@ -79,7 +79,7 @@ export const clearOpponentMoves = () => ({
 });
 ```
 
-This functions return _actions/objects_ and will be dispatched to update various parts of our context.
+This functions return _objects_ that will be dispatched as actions to update various parts of our context.
 
 ## Reducers
 
@@ -110,6 +110,15 @@ Each of this `case` statements updates the corresponding section in our applicat
 Next, in our `Game` component, we update the `useEffect` where we listen to socket events. Whenever we receive an event, instead of logging out the data, let's dispatch this actions to update our state
 
 ```js title="/src/pages/Game/index.jsx"
+import {
+	setMessage,
+	setOpponent,
+	setOpponentMoves,
+	setPlayer,
+	setPlayerColor,
+	types,
+} from '../../context/actions';
+
 useEffect(() => {
 	socket.emit(
 		'join',
@@ -146,10 +155,10 @@ For each event i.e `socket.on('...')`, we get some data and dispatch an action w
 
 ## Showing the Players name and color
 
-To display the players' name and respective color, let's create a new component. In
-`src/components/` create two new files `index.jsx` for the component and `player-styles.css` for the styling.
+To display the players' names and respective colors, let's create a new component. In
+`src/components/`, create a new folder `player` and create two new files in that folder, `index.jsx` for the component and `player-styles.css` for the styling.
 
-```
+```py {7}
 ├───board
 ├───button
 ├───cell
@@ -191,7 +200,7 @@ const Player = ({ name, color, player }) => {
 export default Player;
 ```
 
-This component takes in the `name` and `color` of a player. It displays the `name` and a white or black king piece to show the player's color.
+This component takes the `name` and `color` of a player via _props_. It displays the `name` and a white or black king piece to show the player's color.
 It also takes in a _player_ prop which will be _boolean_. It is used to set different classNames between the `Player` component showing _this_ player and the `Player` component showing their opponent. `` className={`player ${player ? 'you' : 'opponent'}`} `` This will be more clear when we see it in action shortly.
 
 Add the following styles in `player-styles.css` to style this component.
@@ -235,7 +244,7 @@ Add the following styles in `player-styles.css` to style this component.
 }
 ```
 
-In the `Game` component, let's make use of the `Player` component to display the players in the `Game` the game. Make this changes (the rest of the code remains the same)
+In the `Game` component, let's make use of the `Player` component to display the players in the game. Make the following changes (the rest of the code remains the same).
 
 ```js title="/src/pages/Game/index.jsx"
 import './game-styles.css';
@@ -261,7 +270,15 @@ const Game = () => {
 
 We pass the _player_ prop to the first `<Player/>` since this will hold the current player's name and color, it's therefore going to be styled differently.
 
-We also need some styles in `game-styles.css` to make sure the positioning of the `Player` components works fine and to also set a background image
+We also need some styles in `game-styles.css` to make sure the positioning of the `Player` components works fine and to also set a background image.
+
+In `src/pages/Game` create a new file `game-styles.css` and add these styles.
+
+```py {3}
+Game
+├───index.jsx
+└───game-styles.css -> create this
+```
 
 ```css title="/src/pages/Game/game-styles.css"
 .game {
@@ -283,15 +300,15 @@ To test this out, add two players in the same Game and here's what we should hav
 We would like to show some messages to the player on certain events e.g the welcome message we receive from the server when a user joins the game, alert them when their opponent joins the game, alert them when its their turn to make a move and anytime we receive the `message` event from the webserver.
 We will display messages within a [Snackbar](https://bit.dev/mui-org/material-ui/snackbar/) component. A snackbar is a small non-distractive dialog mostly at the bottom of the screen.
 
-Let's install a snackbar from [bit.dev](https://bit.dev/) which is a registry of components for both React and other frameworks.
+Let's install a snackbar from [bit.dev](https://bit.dev/) which is a registry for components for both React and other front-end frameworks.
 
 ```
 npm i @bit/mui-org.material-ui.snackbar
 ```
 
-Let's create a new component to make use of the `snackbar`. in `src/components/` create a new folder `snackbar` and create a new file in `/snackbar` save it as `index.jsx`.
+Let's create a new component to make use of the `snackbar`. In `src/components/` create a new folder `snackbar` and create a new file in `/snackbar` save it as `index.jsx`.
 
-```
+```py {10}
 components
 ├───board
 ├───button
@@ -343,13 +360,13 @@ const Toast = () => {
 export default Toast;
 ```
 
-We return the `Snackbar` component we installed earlier. We get our `message` from our _context_ and pass this as the _open_ prop, so this snackbar only opens when message is not empty.
-We also provide the `message` from _context_ as the value `message` prop which is displayed by this Snackbar.
-We set the value for the `autoHideDuration` to 2500 to automatically close the snackbar after 2500ms by calling `onClose` which is set to `handleClose`. `handleClose` dispatches the `CLEAR_MESSAGE` clear the message in state which in turn hides this component.
+We create the `Toast` component that returns the `Snackbar`. We get the `message` from our _context_ and pass this as the value of the _open_ prop, so this snackbar only opens when message is not empty.
+We also provide the `message` from _context_ as the value of the `message` prop which is displayed by this Snackbar.
+We set the value for the `autoHideDuration` to _2500_ to automatically close the snackbar after _2500ms_ by calling `onClose` which is set to `handleClose`. `handleClose` dispatches the `CLEAR_MESSAGE`to clear the message in state which in turn hides this component.
 
 In the `Game` component, let's add this Snackbar to display any messages that are set in our state.
 
-```jsx title="/src/pages/Game/index.jsx"
+```jsx title="/src/pages/Game/index.jsx" {6,15}
 const Game = () => {
 	useEffect(() => {
 		socket.on('opponentMove', ({ from, to }) => {
@@ -364,13 +381,15 @@ const Game = () => {
 			<Player name={player} color={playerColor} player />
 			<Player name={opponentName} color={playerColor === 'w' ? 'b' : 'w'} />
 			<Board cells={board} makeMove={makeMove} setFromPos={setFromPos} />
-			<Snackbar />
+			<Toast />
 		</div>
 	);
 };
 ```
 
 When we receive the `opponentMove` event, we also set a message `dispatch(setMessage('Your Turn'))` which displays a Snackbar to show a user that its their turn
+
+![img](../static/img/Screenshot15.png)
 
 <!-- Finally, we need to higlight the opponent's previous moves to -->
 
@@ -391,3 +410,7 @@ chess.move({ from: 'g2', to: 'g3' });
 ```
 
 The `flag` property will have a value of `c` if the move was a capture. It will also contain a `captured` property with the name of the piece that was captured. You can store this in the `GameContext` and then create a component that gets the captured pieces from `GameContext` and displays them.
+
+I hope you had fun working on this project.
+
+Happy Coding. 🎉🎉
