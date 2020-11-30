@@ -5,22 +5,41 @@ sidebar_label: Getting started
 slug: /01-get-started
 ---
 
-To get started, let's create a new React project. Run this command in your terminal in the folder you wish to save this project in.
+## Starter Files
+
+To get started with the project, download the project starter files from
+[here](../static/live-chess.rar).
+It is a React project created using [Create React App](https://github.com/facebook/create-react-app)
+
+Open the project directory from your terminal and install the dependencies by running this command.
 
 ```
-npx create-react-app chess-client
+npm install
 ```
 
-This creates a new app with React and installs the dependencies. Run `cd chess-client` to navigate to that folder and run `npm start` to start the application.
-`npx` and `npm` commands were installed as part of your installation of Node.js
+Once this is done, you can start the project by running
 
-![img](../static/img/Screenshot1.png)
+`npm start`
 
-Delete all the files in the `src` folder of your project. Don't worry, we will be creating them from scratch
+This runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Create a new file `App.js` in the `src` folder we just cleared. This is our application's entry point.
+The `npm` command was installed as part of your installation of Node.js.
 
-In `App.js` let's create a new React component by adding the following code.
+![img](../static/img/Screenshot2.png)
+
+## Walkthrough
+
+The starter project has 3 files in the `src` folder, let's go through them
+
+```
+src
+├───App.js
+├───App.css
+└───index.js
+```
+
+In `App.js` we create a new React component using the following code
 
 ```java title="src/App.js"
 import React from 'react';
@@ -36,13 +55,8 @@ export default App;
 This a React functional component. It is a regular JavaScript function that returns some HTML tags.
 
 This special HTML in JS syntax is known as JSX (JavaScript XML). We have to import React to use JSX.
-Since we are importing `App.css` let's create a new file `App.css` in `src` to add some base styling.
 
-```
-src
-├───App.js
-└───App.css -> create this file
-```
+We are importing `App.css` to add some base styling.
 
 ```css title="src/App.css"
 * {
@@ -58,9 +72,7 @@ body {
 
 Notice how we imported the `App.css` file in `App.js` as though it were a JavaScript module. This works due to [Webpack](https://webpack.js.org/), a package React uses behind the scenes to bundle dependencies into a single module.
 
-Let's use this component to view some content on our browser.
-
-Create a new file `index.js` in the `src` folder and add the following code
+In `index.js` we render our `App` component on the browser
 
 ```java title="src/index.js"
 import React from 'react';
@@ -76,12 +88,14 @@ ReactDOM.render(
 ```
 
 We use ReactDOM, a package installed with React. It helps us render React elements to the browser DOM.
-We call `ReactDOM.render()` passing our `App` component as the first argument and a HTMl element returned from `document.getElementById('root')` as the second. If you inspect the `index.html` file in `public`, you will find an empty, `<div id="root"/>`. This is where `ReactDOM` renders our `App` component.
+We call `ReactDOM.render()` passing our `App` component as the first argument and a HTML element returned from `document.getElementById('root')` as the second. If you inspect the `index.html` file in `public`, you will find an empty _div_ `<div id="root"/>`. This is where `ReactDOM` renders our `App` component.
 
 Our component is wrapped in `React.StrictMode`, this is optional but gives us useful warnings about any possible issues in our components.
 
 Notice how we use our component as `<App/>`. React components are used like HTML tags, and they must start with an uppercase letter to distinguish them from regular HTML tags.
 
-Save and check your browser on `localhost:3000`, the App should now look as shown
+:::note
+All the assets(images) used in this project are available in `src/assets`, you don't have to download them again when required in later sections
+:::
 
-![img](../static/img/Screenshot2.png)
+You can also find this project starter code in [this GitHub branch](https://github.com/franknmungai/live-chess) and clone or download it.
