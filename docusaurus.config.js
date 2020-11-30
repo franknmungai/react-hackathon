@@ -67,24 +67,6 @@ module.exports = {
 						},
 					],
 				},
-				// {
-				// 	title: 'Authors',
-				// 	items: [
-				// 		{
-				// 			label: 'Frank Mungai',
-				// 			href: 'https://github.com/franknmungai',
-				// 		},
-				// 		{
-				// 			label: 'Collins Kesuibai',
-				// 			href: 'https://github.com/collinskesuibai',
-				// 		},
-				// 		{
-				// 			label: 'June Awuor',
-				// 			href: 'https://github.com/AwuorJune',
-				// 		},
-				// 	],
-				// },
-
 				{
 					title: 'Community',
 					items: [
